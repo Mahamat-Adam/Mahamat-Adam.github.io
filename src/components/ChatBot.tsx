@@ -104,6 +104,17 @@ export function ChatBot() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
+  // On phones the panel covers most of the screen, so hold the page still
+  // while it is open. Desktop keeps scrolling normally behind it.
+  useEffect(() => {
+    if (!open || !window.matchMedia('(max-width: 639px)').matches) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [open])
+
   // The invite stays until the visitor actually opens the chat; after that it
   // has done its job and does not come back.
   useEffect(() => {
@@ -219,7 +230,9 @@ export function ChatBot() {
             <div
               ref={listRef}
               aria-live="polite"
-              className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
+              // contain stops the gesture chaining to the page when the list
+              // reaches its top or bottom
+              className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4"
             >
               {messages.map((m, i) => (
                 <div key={i}>

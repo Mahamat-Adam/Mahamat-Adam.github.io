@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { Reveal } from './Reveal'
+import { ScrollStrip } from './ScrollStrip'
 
 const appShots = Array.from(
   { length: 5 },
@@ -119,7 +120,7 @@ export function FypGallery() {
     <div className="mt-14 space-y-12">
       <Reveal>
         <StripLabel kicker="Customer app · Flutter" note="tap any screen to enlarge" />
-        <div className="strip-scroll flex gap-3 overflow-x-auto md:gap-4">
+        <ScrollStrip className="flex gap-3 overflow-x-auto md:gap-4">
           {appShots.map((src, i) => (
             <button
               key={src}
@@ -135,7 +136,7 @@ export function FypGallery() {
               />
             </button>
           ))}
-        </div>
+        </ScrollStrip>
       </Reveal>
 
       <Reveal>
@@ -143,7 +144,7 @@ export function FypGallery() {
           kicker="Admin & seller panels · Laravel"
           note="scroll sideways · tap to enlarge"
         />
-        <div className="strip-scroll flex snap-x snap-mandatory gap-3 overflow-x-auto md:gap-4">
+        <ScrollStrip className="flex snap-x snap-mandatory gap-3 overflow-x-auto md:gap-4">
           {panelShots.map((src, i) => (
             <button
               key={src}
@@ -159,7 +160,7 @@ export function FypGallery() {
               />
             </button>
           ))}
-        </div>
+        </ScrollStrip>
       </Reveal>
 
       <AnimatePresence>

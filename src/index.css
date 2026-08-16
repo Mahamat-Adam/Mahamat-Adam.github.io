@@ -69,25 +69,20 @@ a {
   }
 }
 
-/* Horizontal screenshot strips: a slim scrollbar that sits clear of the
-   images instead of the chunky default one crowding them. */
+/* Horizontal screenshot strips. Mobile browsers hide their scrollbars until
+   you drag, so a custom indicator below the strip shows there is more to see.
+   Desktop keeps its native scrollbar. */
 .strip-scroll {
-  padding-bottom: 0.85rem;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(120, 120, 130, 0.55) transparent;
+  padding-bottom: 0.5rem;
 }
-.strip-scroll::-webkit-scrollbar {
-  height: 8px;
-}
-.strip-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-.strip-scroll::-webkit-scrollbar-thumb {
-  background: rgba(120, 120, 130, 0.45);
-  border-radius: 999px;
-}
-.strip-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 120, 130, 0.7);
+@media (max-width: 767px) {
+  .strip-scroll {
+    padding-bottom: 0;
+    scrollbar-width: none;
+  }
+  .strip-scroll::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Chat typing indicator */
