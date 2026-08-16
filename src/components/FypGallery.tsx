@@ -119,7 +119,7 @@ export function FypGallery() {
     <div className="mt-14 space-y-12">
       <Reveal>
         <StripLabel kicker="Customer app · Flutter" note="tap any screen to enlarge" />
-        <div className="flex gap-3 overflow-x-auto pb-2 md:gap-4">
+        <div className="strip-scroll flex gap-3 overflow-x-auto md:gap-4">
           {appShots.map((src, i) => (
             <button
               key={src}
@@ -143,7 +143,7 @@ export function FypGallery() {
           kicker="Admin & seller panels · Laravel"
           note="scroll sideways · tap to enlarge"
         />
-        <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 md:gap-4">
+        <div className="strip-scroll flex snap-x snap-mandatory gap-3 overflow-x-auto md:gap-4">
           {panelShots.map((src, i) => (
             <button
               key={src}
