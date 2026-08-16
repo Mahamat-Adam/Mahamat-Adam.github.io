@@ -42,7 +42,7 @@ export function Experience() {
 
         {/* stacked: strip follows the internship card it belongs to;
             desktop keeps education beside the internship card */}
-        <Reveal delay={0.1} className="order-3 min-w-0 lg:order-2">
+        <Reveal delay={0.1} className="order-5 min-w-0 lg:order-2">
           <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card dark:border-nline dark:bg-panel">
             <div className="p-7">
               <h3 className="font-display text-lg font-bold">Education</h3>
@@ -74,7 +74,7 @@ export function Experience() {
           <PhotoMarquee images={officeImages} heightClass="h-40 md:h-52" />
         </Reveal>
 
-        <Reveal delay={0.16} className="order-4 min-w-0 lg:col-span-3">
+        <Reveal delay={0.16} className="order-3 min-w-0 lg:order-4 lg:col-span-3">
           <article className="rounded-2xl border border-line bg-card p-7 md:p-9 dark:border-nline dark:bg-panel">
             <h3 className="font-display text-lg font-bold">Toolbox</h3>
             <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -99,7 +99,7 @@ export function Experience() {
           </article>
         </Reveal>
 
-        <Reveal delay={0.18} className="order-5 min-w-0 lg:col-span-3">
+        <Reveal delay={0.18} className="order-4 min-w-0 lg:order-5 lg:col-span-3">
           <FieldRoleCard />
         </Reveal>
       </div>
