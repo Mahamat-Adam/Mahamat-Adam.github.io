@@ -54,22 +54,22 @@ export function ChatBot() {
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
   const [inviteDismissed, setInviteDismissed] = useState(false)
-  // on-screen keyboard height and the area still visible above it
-  const [viewport, setViewport] = useState({ keyboardInset: 0, visibleHeight: 0 })
+  // the band of screen still visible above the keyboard
+  const [band, setBand] = useState({ open: false, top: 0, height: 0 })
   const listRef = useRef<HTMLDivElement>(null)
   const reduced = useReducedMotion()
   const showInvite = !open && !inviteDismissed
 
-  // A fixed element stays anchored to the layout viewport, so on iOS the
-  // input row hides behind the keyboard. visualViewport reports the real
-  // visible area, and the panel is offset by the difference.
+  // A fixed element is placed against the layout viewport, which does not
+  // shrink when the keyboard opens. Rather than infer the keyboard height by
+  // subtraction (iOS also moves its own toolbars, so that overshoots), pin
+  // the panel to the visible band that visualViewport reports directly.
   useEffect(() => {
     const vv = window.visualViewport
     if (!vv) return
     const update = () => {
-      const inset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop)
-      // small insets are browser chrome, not a keyboard
-      setViewport({ keyboardInset: inset > 80 ? inset : 0, visibleHeight: vv.height })
+      const hidden = window.innerHeight - vv.height
+      setBand({ open: hidden > 120, top: vv.offsetTop, height: vv.height })
     }
     update()
     vv.addEventListener('resize', update)
@@ -163,9 +163,9 @@ export function ChatBot() {
           up floating in the middle of the page */}
       <div
         className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3"
-        style={viewport.keyboardInset ? { bottom: viewport.keyboardInset + 12 } : undefined}
+        style={band.open ? { top: band.top + band.height - 68, bottom: 'auto' } : undefined}
       >
-        {!viewport.keyboardInset && <BackToTop />}
+        {!band.open && <BackToTop />}
 
         <AnimatePresence>
           {showInvite && (
@@ -210,11 +210,12 @@ export function ChatBot() {
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.22 }}
             style={
-              viewport.keyboardInset
+              band.open
                 ? {
-                    // clear the keyboard and the chat button sitting above it
-                    bottom: viewport.keyboardInset + 80,
-                    height: Math.max(200, viewport.visibleHeight - 92),
+                    // sit inside the visible band, leaving room for the button
+                    top: band.top + 8,
+                    bottom: 'auto',
+                    height: Math.max(180, band.height - 84),
                     maxHeight: 'none',
                   }
                 : undefined
