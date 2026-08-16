@@ -230,9 +230,9 @@ export function ChatBot() {
             <div
               ref={listRef}
               aria-live="polite"
-              // contain stops the gesture chaining to the page when the list
-              // reaches its top or bottom
-              className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4"
+              // contained on phones, where the panel covers the screen; on
+              // desktop there is room, so the page keeps scrolling behind
+              className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4 sm:overscroll-auto"
             >
               {messages.map((m, i) => (
                 <div key={i}>
