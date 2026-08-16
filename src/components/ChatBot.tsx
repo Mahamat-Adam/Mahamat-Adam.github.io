@@ -159,8 +159,13 @@ export function ChatBot() {
 
   return (
     <>
-      <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3">
-        <BackToTop />
+      {/* the whole stack rides above the keyboard, so the button never ends
+          up floating in the middle of the page */}
+      <div
+        className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3"
+        style={viewport.keyboardInset ? { bottom: viewport.keyboardInset + 12 } : undefined}
+      >
+        {!viewport.keyboardInset && <BackToTop />}
 
         <AnimatePresence>
           {showInvite && (
@@ -207,8 +212,9 @@ export function ChatBot() {
             style={
               viewport.keyboardInset
                 ? {
-                    bottom: viewport.keyboardInset + 12,
-                    height: Math.max(220, viewport.visibleHeight - 24),
+                    // clear the keyboard and the chat button sitting above it
+                    bottom: viewport.keyboardInset + 80,
+                    height: Math.max(200, viewport.visibleHeight - 92),
                     maxHeight: 'none',
                   }
                 : undefined
