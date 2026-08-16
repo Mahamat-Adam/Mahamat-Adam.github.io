@@ -58,7 +58,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.24 }}
-          className="mt-9 flex flex-wrap items-center gap-4"
+          className="mt-9 flex flex-wrap items-center justify-center gap-4 sm:justify-start"
         >
           <a
             href="#projects"

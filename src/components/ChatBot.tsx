@@ -56,9 +56,27 @@ export function ChatBot() {
   const [inviteDismissed, setInviteDismissed] = useState(false)
   // the band of screen still visible above the keyboard
   const [band, setBand] = useState({ open: false, top: 0, height: 0 })
+  // on phones the invite waits until the visitor has scrolled off the hero,
+  // and goes away again when they return to the top
+  const [scrolledPastHero, setScrolledPastHero] = useState(false)
+  const [isPhone, setIsPhone] = useState(false)
   const listRef = useRef<HTMLDivElement>(null)
   const reduced = useReducedMotion()
-  const showInvite = !open && !inviteDismissed
+  const showInvite = !open && !inviteDismissed && (!isPhone || scrolledPastHero)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)')
+    const sync = () => setIsPhone(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    const onScroll = () => setScrolledPastHero(window.scrollY > window.innerHeight * 0.6)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      mq.removeEventListener('change', sync)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [])
 
   // A fixed element is placed against the layout viewport, which does not
   // shrink when the keyboard opens. Rather than infer the keyboard height by
