@@ -54,9 +54,31 @@ export function ChatBot() {
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
   const [inviteDismissed, setInviteDismissed] = useState(false)
+  // on-screen keyboard height and the area still visible above it
+  const [viewport, setViewport] = useState({ keyboardInset: 0, visibleHeight: 0 })
   const listRef = useRef<HTMLDivElement>(null)
   const reduced = useReducedMotion()
   const showInvite = !open && !inviteDismissed
+
+  // A fixed element stays anchored to the layout viewport, so on iOS the
+  // input row hides behind the keyboard. visualViewport reports the real
+  // visible area, and the panel is offset by the difference.
+  useEffect(() => {
+    const vv = window.visualViewport
+    if (!vv) return
+    const update = () => {
+      const inset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop)
+      // small insets are browser chrome, not a keyboard
+      setViewport({ keyboardInset: inset > 80 ? inset : 0, visibleHeight: vv.height })
+    }
+    update()
+    vv.addEventListener('resize', update)
+    vv.addEventListener('scroll', update)
+    return () => {
+      vv.removeEventListener('resize', update)
+      vv.removeEventListener('scroll', update)
+    }
+  }, [])
 
   // Type out unfinished bot messages (all of them, so an interrupted
   // answer still finishes instead of freezing mid-sentence).
@@ -171,6 +193,15 @@ export function ChatBot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.22 }}
+            style={
+              viewport.keyboardInset
+                ? {
+                    bottom: viewport.keyboardInset + 12,
+                    height: Math.max(220, viewport.visibleHeight - 24),
+                    maxHeight: 'none',
+                  }
+                : undefined
+            }
             className="fixed bottom-24 right-4 left-4 z-40 flex h-[65svh] max-h-[560px] flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-2xl sm:left-auto sm:w-96 dark:border-nline dark:bg-panel"
           >
             <div className="flex items-center gap-3 border-b border-line px-4 py-3 dark:border-nline">
@@ -236,12 +267,13 @@ export function ChatBot() {
                 onKeyDown={(e) => e.key === 'Enter' && !e.nativeEvent.isComposing && send()}
                 placeholder="Ask about Mahamat..."
                 aria-label="Ask about Mahamat"
-                className="flex-1 rounded-full border border-line bg-transparent px-4 py-2.5 text-sm outline-none placeholder:text-zinc-400 focus:border-accent dark:border-nline dark:placeholder:text-zinc-500"
+                // 16px minimum: below that, iOS Safari zooms the page on focus
+                className="min-w-0 flex-1 rounded-full border border-line bg-transparent px-4 py-2.5 text-base outline-none placeholder:text-zinc-400 focus:border-accent dark:border-nline dark:placeholder:text-zinc-500"
               />
               <button
                 onClick={send}
                 aria-label="Send"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-40"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-40"
                 disabled={!input.trim() || busy}
               >
                 <Send size={16} />
