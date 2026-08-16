@@ -82,12 +82,11 @@ export function ChatBot() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
-  // The invite has said its piece after a few seconds; on a phone it would
-  // otherwise sit over the content for the whole visit.
+  // The invite stays until the visitor actually opens the chat; after that it
+  // has done its job and does not come back.
   useEffect(() => {
-    const t = setTimeout(() => setInviteDismissed(true), 12000)
-    return () => clearTimeout(t)
-  }, [])
+    if (open) setInviteDismissed(true)
+  }, [open])
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight })
@@ -136,7 +135,9 @@ export function ChatBot() {
               onClick={() => setOpen(true)}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              // exit needs its own timing: the entrance delay below would
+              // otherwise apply on the way out too, leaving it on screen
+              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2, delay: 0 } }}
               transition={{
                 opacity: { delay: 1.8, duration: 0.35 },
                 scale: { delay: 1.8, duration: 0.35 },
