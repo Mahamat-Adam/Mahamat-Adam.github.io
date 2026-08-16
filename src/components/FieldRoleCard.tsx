@@ -34,8 +34,13 @@ function FieldRoleModal({ onClose }: { onClose: () => void }) {
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 backdrop-blur-sm sm:items-center sm:p-6"
       onClick={onClose}
     >
+      {/* not a shared-element (layoutId) morph: the transform it leaves on
+          this container makes iOS Safari mis-place taps inside it */}
       <motion.div
-        layoutId="field-role"
+        initial={{ y: 28, scale: 0.98 }}
+        animate={{ y: 0, scale: 1 }}
+        exit={{ y: 28, scale: 0.98 }}
+        transition={{ duration: 0.22 }}
         onClick={(e) => e.stopPropagation()}
         className="max-h-[92svh] w-full max-w-3xl overflow-y-auto rounded-t-3xl border border-line bg-card sm:rounded-3xl dark:border-nline dark:bg-panel"
       >
@@ -49,7 +54,8 @@ function FieldRoleModal({ onClose }: { onClose: () => void }) {
             ref={closeRef}
             onClick={onClose}
             aria-label="Close"
-            className="absolute right-4 top-4 rounded-full bg-black/50 p-2 text-white backdrop-blur transition-transform hover:scale-105"
+            style={{ touchAction: 'manipulation' }}
+            className="absolute right-4 top-4 rounded-full bg-black/50 p-2.5 text-white backdrop-blur transition-transform hover:scale-105"
           >
             <X size={18} />
           </button>
@@ -102,7 +108,6 @@ export function FieldRoleCard() {
   return (
     <>
       <motion.button
-        layoutId="field-role"
         onClick={() => setOpen(true)}
         whileHover={{ y: -4 }}
         className="group grid w-full overflow-hidden rounded-2xl border border-line bg-card text-left sm:grid-cols-2 dark:border-nline dark:bg-panel"

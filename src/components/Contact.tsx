@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Copy, Download, Linkedin, Mail, MapPin } from 'lucide-react'
 import { profile } from '../data/profile'
+import { openExternal } from '../lib/openExternal'
 import { GithubIcon } from './icons'
 import { Reveal } from './Reveal'
 import { Section } from './Section'
@@ -61,6 +62,8 @@ export function Contact() {
                 href={profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => openExternal(e, profile.linkedin)}
+                style={{ touchAction: 'manipulation' }}
                 className="flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm transition-colors hover:border-accent hover:text-accentInk dark:hover:text-accentSoft dark:border-nline"
               >
                 <Linkedin size={15} /> LinkedIn
@@ -70,6 +73,8 @@ export function Contact() {
                   href={profile.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) => openExternal(e, profile.github)}
+                  style={{ touchAction: 'manipulation' }}
                   className="flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm transition-colors hover:border-accent hover:text-accentInk dark:hover:text-accentSoft dark:border-nline"
                 >
                   <GithubIcon size={15} /> GitHub

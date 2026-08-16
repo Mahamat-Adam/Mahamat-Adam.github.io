@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
 import { projects, type Project } from '../data/projects'
+import { openExternal } from '../lib/openExternal'
 import { Reveal } from './Reveal'
 import { Section } from './Section'
 
@@ -161,7 +162,9 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
             </motion.div>
           )}
         </AnimatePresence>
-        <div className="p-6 md:p-8">
+        {/* extra bottom padding keeps the visit link clear of the iOS home
+            indicator strip, where taps get taken by the system gesture */}
+        <div className="p-6 pb-16 md:p-8 md:pb-10">
           <p className="font-mono text-[11px] uppercase tracking-widest text-accentInk dark:text-accentSoft">
             {p.category}
           </p>
@@ -186,6 +189,7 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => openExternal(e, p.link!)}
               style={{ touchAction: 'manipulation' }}
               className="mt-7 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
             >

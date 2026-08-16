@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowDown, FileText, Linkedin, Mail } from 'lucide-react'
 import { profile } from '../data/profile'
+import { openExternal } from '../lib/openExternal'
 import { DocViewer } from './DocViewer'
 import { GithubIcon } from './icons'
 
@@ -83,6 +84,8 @@ export function Hero() {
               href={profile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => openExternal(e, profile.linkedin)}
+              style={{ touchAction: 'manipulation' }}
               aria-label="LinkedIn"
               className="rounded-full border border-line p-3 text-zinc-600 transition-colors hover:border-accent hover:text-accentInk dark:hover:text-accentSoft dark:border-nline dark:text-zinc-400"
             >
@@ -93,6 +96,8 @@ export function Hero() {
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => openExternal(e, profile.github)}
+                style={{ touchAction: 'manipulation' }}
                 aria-label="GitHub"
                 className="rounded-full border border-line p-3 text-zinc-600 transition-colors hover:border-accent hover:text-accentInk dark:hover:text-accentSoft dark:border-nline dark:text-zinc-400"
               >
