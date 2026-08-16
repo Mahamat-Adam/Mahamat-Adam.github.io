@@ -95,16 +95,16 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               <button
                 onClick={() => move(-1)}
                 aria-label="Previous view"
-                className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur transition-transform hover:scale-105"
+                className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105"
               >
-                <ChevronLeft size={18} />
+                <ChevronLeft size={24} />
               </button>
               <button
                 onClick={() => move(1)}
                 aria-label="Next view"
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur transition-transform hover:scale-105"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105"
               >
-                <ChevronRight size={18} />
+                <ChevronRight size={24} />
               </button>
               <span className="absolute bottom-3 right-4 rounded-full bg-black/50 px-2.5 py-1 font-mono text-[11px] text-white backdrop-blur">
                 {idx + 1} / {gallery.length}
@@ -128,15 +128,17 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               }}
               className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-3"
             >
-              {/* natural size and pannable on phones, fitted on desktop */}
+              {/* opens fitted so the whole screenshot is visible; pinch to
+                  zoom in from there, and the box pans once zoomed */}
               <div
                 onClick={(e) => e.stopPropagation()}
                 className="max-h-full max-w-full overflow-auto overscroll-contain"
+                style={{ touchAction: 'pinch-zoom' }}
               >
                 <img
                   src={gallery[idx]}
                   alt={`${p.title} screenshot, enlarged`}
-                  className="max-w-none cursor-zoom-out sm:max-h-full sm:max-w-full sm:object-contain"
+                  className="max-h-[88svh] max-w-full cursor-zoom-out object-contain"
                   onClick={() => setZoomed(false)}
                 />
               </div>

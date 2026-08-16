@@ -51,16 +51,16 @@ function Lightbox({
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
-      {/* on a phone the image is shown at natural size inside a pannable box:
-          fitting it to the screen would be no larger than the thumbnail */}
+      {/* opens fitted so the whole screenshot is visible; pinch to zoom in */}
       <div
         onClick={(e) => e.stopPropagation()}
         className="max-h-[85svh] max-w-full overflow-auto overscroll-contain rounded-xl"
+        style={{ touchAction: 'pinch-zoom' }}
       >
         <img
           src={state.list[state.index]}
           alt={`System screenshot ${state.index + 1}`}
-          className="max-w-none sm:max-h-[85svh] sm:max-w-full sm:object-contain"
+          className="max-h-[85svh] max-w-full object-contain"
         />
       </div>
       <button

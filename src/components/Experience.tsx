@@ -15,7 +15,7 @@ export function Experience() {
       {/* min-w-0 on every grid child: without it a track stretches to the
  photo strip's full content width instead of the viewport. */}
       <div className="grid gap-8 lg:grid-cols-3">
-        <Reveal className="min-w-0 lg:col-span-2">
+        <Reveal className="order-1 min-w-0 lg:col-span-2">
           <article className="h-full rounded-2xl border border-line bg-card p-7 md:p-9 dark:border-nline dark:bg-panel">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h3 className="font-display text-xl font-bold md:text-2xl">{experience.role}</h3>
@@ -40,7 +40,9 @@ export function Experience() {
           </article>
         </Reveal>
 
-        <Reveal delay={0.1} className="min-w-0">
+        {/* stacked: strip follows the internship card it belongs to;
+            desktop keeps education beside the internship card */}
+        <Reveal delay={0.1} className="order-3 min-w-0 lg:order-2">
           <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card dark:border-nline dark:bg-panel">
             <div className="p-7">
               <h3 className="font-display text-lg font-bold">Education</h3>
@@ -65,14 +67,14 @@ export function Experience() {
           </article>
         </Reveal>
 
-        <Reveal delay={0.14} className="min-w-0 lg:col-span-3">
+        <Reveal delay={0.14} className="order-2 min-w-0 lg:order-3 lg:col-span-3">
           <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
             At the office
           </p>
           <PhotoMarquee images={officeImages} heightClass="h-40 md:h-52" />
         </Reveal>
 
-        <Reveal delay={0.16} className="min-w-0 lg:col-span-3">
+        <Reveal delay={0.16} className="order-4 min-w-0 lg:col-span-3">
           <article className="rounded-2xl border border-line bg-card p-7 md:p-9 dark:border-nline dark:bg-panel">
             <h3 className="font-display text-lg font-bold">Toolbox</h3>
             <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -97,7 +99,7 @@ export function Experience() {
           </article>
         </Reveal>
 
-        <Reveal delay={0.18} className="min-w-0 lg:col-span-3">
+        <Reveal delay={0.18} className="order-5 min-w-0 lg:col-span-3">
           <FieldRoleCard />
         </Reveal>
       </div>
