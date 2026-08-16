@@ -66,8 +66,14 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-0 backdrop-blur-sm sm:items-center sm:p-6"
       onClick={onClose}
     >
+      {/* deliberately not a shared-element (layoutId) morph: that leaves a
+          transform on this container, and iOS Safari then mis-places taps
+          inside it, so the "Visit the site" link needed a long press */}
       <motion.div
-        layoutId={`project-${p.id}`}
+        initial={{ y: 28, scale: 0.98 }}
+        animate={{ y: 0, scale: 1 }}
+        exit={{ y: 28, scale: 0.98 }}
+        transition={{ duration: 0.22 }}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -180,7 +186,8 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-7 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
+              style={{ touchAction: 'manipulation' }}
+              className="mt-7 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
             >
               {p.linkLabel ?? 'Visit site'} <ArrowUpRight size={15} />
             </a>
@@ -211,7 +218,6 @@ export function Projects() {
           return (
             <Reveal key={p.id} delay={(i % 3) * 0.07} className={span}>
               <motion.button
-                layoutId={`project-${p.id}`}
                 onClick={() => setOpenId(p.id)}
                 whileHover={{ y: -5 }}
                 className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-card text-left dark:border-nline dark:bg-panel"
