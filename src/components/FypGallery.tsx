@@ -49,20 +49,46 @@ function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-label="Screenshot viewer"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       {/* opens fitted so the whole screenshot is visible; pinch to zoom in */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="max-h-[85svh] max-w-full overflow-auto overscroll-contain rounded-xl"
+        className="max-h-[70svh] max-w-full overflow-auto overscroll-contain rounded-xl sm:max-h-[85svh]"
         style={{ touchAction: 'pinch-zoom' }}
       >
         <img
           src={state.list[state.index]}
           alt={`System screenshot ${state.index + 1}`}
-          className="max-h-[85svh] max-w-full object-contain"
+          className="max-h-[70svh] max-w-full object-contain sm:max-h-[85svh]"
         />
+      </div>
+
+      {/* On phones the controls sit BELOW the screenshot: at this size a button
+          centred on the image edge covers a real part of it, and it stays over
+          the content while pinch-zoomed. Wide screens keep the side arrows. */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="mt-5 flex items-center gap-6 sm:hidden"
+      >
+        <button
+          onClick={() => onMove(-1)}
+          aria-label="Previous screenshot"
+          className="rounded-full bg-white/15 p-3 text-white ring-1 ring-white/25 backdrop-blur transition-colors active:bg-white/30"
+        >
+          <ChevronLeft size={22} />
+        </button>
+        <p className="min-w-16 text-center font-mono text-xs text-white/70">
+          {state.index + 1} / {state.list.length}
+        </p>
+        <button
+          onClick={() => onMove(1)}
+          aria-label="Next screenshot"
+          className="rounded-full bg-white/15 p-3 text-white ring-1 ring-white/25 backdrop-blur transition-colors active:bg-white/30"
+        >
+          <ChevronRight size={22} />
+        </button>
       </div>
       <button
         ref={closeRef}
@@ -78,7 +104,7 @@ function Lightbox({
           onMove(-1)
         }}
         aria-label="Previous screenshot"
-        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-2.5 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/80"
+        className="absolute left-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-2.5 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/80 sm:block"
       >
         <ChevronLeft size={20} />
       </button>
@@ -88,11 +114,11 @@ function Lightbox({
           onMove(1)
         }}
         aria-label="Next screenshot"
-        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-2.5 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/80"
+        className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-2.5 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/80 sm:block"
       >
         <ChevronRight size={20} />
       </button>
-      <p className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-xs text-white/70">
+      <p className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 font-mono text-xs text-white/70 sm:block">
         {state.index + 1} / {state.list.length}
       </p>
     </motion.div>

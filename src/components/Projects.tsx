@@ -102,18 +102,18 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               <button
                 onClick={() => move(-1)}
                 aria-label="Previous view"
-                className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105"
+                className="absolute left-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105 sm:block"
               >
                 <ChevronLeft size={24} />
               </button>
               <button
                 onClick={() => move(1)}
                 aria-label="Next view"
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105"
+                className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105 sm:block"
               >
                 <ChevronRight size={24} />
               </button>
-              <span className="absolute bottom-3 right-4 rounded-full bg-black/50 px-2.5 py-1 font-mono text-[11px] text-white backdrop-blur">
+              <span className="absolute bottom-3 right-4 hidden rounded-full bg-black/50 px-2.5 py-1 font-mono text-[11px] text-white backdrop-blur sm:block">
                 {idx + 1} / {gallery.length}
               </span>
             </>
@@ -122,6 +122,31 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
             <Maximize2 size={11} /> tap to enlarge
           </span>
         </div>
+
+        {/* On phones the gallery controls sit BELOW the screenshot rather than on
+            top of it: the image is only a couple of hundred pixels tall here, so
+            a centred button hides a real part of whatever it is showing. */}
+        {many && (
+          <div className="flex items-center justify-center gap-6 border-b border-line py-3 sm:hidden dark:border-nline">
+            <button
+              onClick={() => move(-1)}
+              aria-label="Previous view"
+              className="rounded-full border border-line p-2.5 text-zinc-600 transition-colors active:border-accent active:text-accentInk dark:border-nline dark:text-zinc-300 dark:active:text-accentSoft"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <span className="min-w-14 text-center font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+              {idx + 1} / {gallery.length}
+            </span>
+            <button
+              onClick={() => move(1)}
+              aria-label="Next view"
+              className="rounded-full border border-line p-2.5 text-zinc-600 transition-colors active:border-accent active:text-accentInk dark:border-nline dark:text-zinc-300 dark:active:text-accentSoft"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
 
         <AnimatePresence>
           {zoomed && (
