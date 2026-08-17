@@ -2,7 +2,6 @@ import { useUi } from '../data/ui'
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
-import { useLang } from '../lib/lang'
 import { Reveal } from './Reveal'
 import { ScrollStrip } from './ScrollStrip'
 
@@ -28,11 +27,6 @@ function Lightbox({
 }) {
   const ui = useUi()
   const closeRef = useRef<HTMLButtonElement>(null)
-  // In RTL the sequence runs right to left, so "previous" is the right-pointing
-  // chevron and the arrow keys swap with it.
-  const { rtl } = useLang()
-  const Prev = rtl ? ChevronRight : ChevronLeft
-  const Next = rtl ? ChevronLeft : ChevronRight
   // Zoom by swapping the image to its natural size so the box genuinely
   // overflows: panning is then native scrolling, which one finger can drive.
   // Scaling with a transform instead would re-introduce the iOS tap offset.
@@ -43,8 +37,8 @@ function Lightbox({
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
-      if (e.key === 'ArrowLeft') onMove(rtl ? 1 : -1)
-      if (e.key === 'ArrowRight') onMove(rtl ? -1 : 1)
+      if (e.key === 'ArrowLeft') onMove(-1)
+      if (e.key === 'ArrowRight') onMove(1)
     }
     window.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
@@ -53,7 +47,7 @@ function Lightbox({
       window.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
     }
-  }, [onClose, onMove, rtl])
+  }, [onClose, onMove])
 
   return (
     <motion.div
@@ -94,14 +88,20 @@ function Lightbox({
       {/* On phones the controls sit BELOW the screenshot: at this size a button
           centred on the image edge covers a real part of it, and it stays over
           the content while pinch-zoomed. Wide screens keep the side arrows. */}
-      <div onClick={(e) => e.stopPropagation()} className="mt-5 flex items-center gap-6 sm:hidden">
+      {/* Pinned LTR: the screenshots are shown in a fixed order, so previous stays
+          on the left in both languages. */}
+      <div
+        dir="ltr"
+        onClick={(e) => e.stopPropagation()}
+        className="mt-5 flex items-center gap-6 sm:hidden"
+      >
         <button
           onClick={() => onMove(-1)}
           data-probe="gal-prev"
           aria-label={ui.fyp.prev}
           className="rounded-full bg-white/15 p-3 text-white ring-1 ring-white/25 backdrop-blur transition-colors active:bg-white/30"
         >
-          <Prev size={22} />
+          <ChevronLeft size={22} />
         </button>
         <p dir="ltr" className="min-w-16 text-center font-mono text-xs text-white/70">
           {state.index + 1} / {state.list.length}
@@ -112,7 +112,7 @@ function Lightbox({
           aria-label={ui.fyp.next}
           className="rounded-full bg-white/15 p-3 text-white ring-1 ring-white/25 backdrop-blur transition-colors active:bg-white/30"
         >
-          <Next size={22} />
+          <ChevronRight size={22} />
         </button>
       </div>
       <div className="pointer-events-none mt-3 sm:hidden">
@@ -135,9 +135,9 @@ function Lightbox({
         }}
         data-probe="gal-prev"
         aria-label={ui.fyp.prev}
-        className="absolute start-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-2.5 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/80 sm:block"
+        className="absolute left-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-2.5 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/80 sm:block"
       >
-        <Prev size={20} />
+        <ChevronLeft size={20} />
       </button>
       <button
         onClick={(e) => {
@@ -146,9 +146,9 @@ function Lightbox({
         }}
         data-probe="gal-next"
         aria-label={ui.fyp.next}
-        className="absolute end-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-2.5 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/80 sm:block"
+        className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-2.5 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/80 sm:block"
       >
-        <Next size={20} />
+        <ChevronRight size={20} />
       </button>
       <p
         dir="ltr"

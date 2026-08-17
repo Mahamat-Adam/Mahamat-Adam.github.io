@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
 import { useProjects } from '../data/content'
 import { type Project } from '../data/projects'
-import { useLang } from '../lib/lang'
 import { openExternal } from '../lib/openExternal'
 import { Reveal } from './Reveal'
 import { Section } from './Section'
@@ -49,10 +48,6 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
   // box overflow, so one finger pans it as normal scrolling; a CSS transform
   // would scale it too but reintroduces the iOS tap offset we removed earlier.
   const [fullSize, setFullSize] = useState(false)
-  // RTL runs the sequence right to left, so the chevrons and arrow keys swap.
-  const { rtl } = useLang()
-  const Prev = rtl ? ChevronRight : ChevronLeft
-  const Next = rtl ? ChevronLeft : ChevronRight
   const gallery = p.images ?? (p.image ? [p.image] : [])
   const many = gallery.length > 1
   const move = (d: number) => setIdx((i) => (i + d + gallery.length) % gallery.length)
@@ -76,12 +71,12 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
         else if (zoomed) setZoomed(false)
         else onClose()
       }
-      if (e.key === 'ArrowLeft') move(rtl ? 1 : -1)
-      if (e.key === 'ArrowRight') move(rtl ? -1 : 1)
+      if (e.key === 'ArrowLeft') move(-1)
+      if (e.key === 'ArrowRight') move(1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [onClose, zoomed, fullSize, gallery.length, rtl])
+  }, [onClose, zoomed, fullSize, gallery.length])
 
   // A different screenshot should arrive fitted, not mid-pan at actual size.
   useEffect(() => setFullSize(false), [idx])
@@ -108,7 +103,10 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
         aria-label={p.title}
         className="max-h-[92svh] w-full max-w-2xl overflow-y-auto rounded-t-3xl border border-line bg-card sm:rounded-3xl dark:border-nline dark:bg-panel"
       >
-        <div className="relative">
+        {/* Pinned LTR: the gallery sequence is not mirrored, so its controls are
+            not either. Without this the right-hand arrow stepped backwards, and the
+            counter badge landed on top of the "tap to enlarge" pill. */}
+        <div dir="ltr" className="relative">
           <button
             onClick={() => setZoomed(true)}
             data-probe="enlarge"
@@ -133,7 +131,7 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
                 aria-label={ui.projects.prev}
                 className="absolute start-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105 sm:block"
               >
-                <Prev size={24} />
+                <ChevronLeft size={24} />
               </button>
               <button
                 onClick={() => move(1)}
@@ -141,7 +139,7 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
                 aria-label={ui.projects.next}
                 className="absolute end-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105 sm:block"
               >
-                <Next size={24} />
+                <ChevronRight size={24} />
               </button>
               <span
                 dir="ltr"
@@ -160,14 +158,17 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
             top of it: the image is only a couple of hundred pixels tall here, so
             a centred button hides a real part of whatever it is showing. */}
         {many && (
-          <div className="flex items-center justify-center gap-6 border-b border-line py-3 sm:hidden dark:border-nline">
+          <div
+            dir="ltr"
+            className="flex items-center justify-center gap-6 border-b border-line py-3 sm:hidden dark:border-nline"
+          >
             <button
               onClick={() => move(-1)}
               data-probe="gal-prev"
               aria-label={ui.projects.prev}
               className="rounded-full border border-line p-2.5 text-zinc-600 transition-colors active:border-accent active:text-accentInk dark:border-nline dark:text-zinc-300 dark:active:text-accentSoft"
             >
-              <Prev size={20} />
+              <ChevronLeft size={20} />
             </button>
             <span
               dir="ltr"
@@ -181,7 +182,7 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               aria-label={ui.projects.next}
               className="rounded-full border border-line p-2.5 text-zinc-600 transition-colors active:border-accent active:text-accentInk dark:border-nline dark:text-zinc-300 dark:active:text-accentSoft"
             >
-              <Next size={20} />
+              <ChevronRight size={20} />
             </button>
           </div>
         )}
