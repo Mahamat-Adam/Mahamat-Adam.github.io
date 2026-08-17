@@ -12,26 +12,22 @@ Live at **https://mahamat-adam.github.io**
 - Tailwind CSS
 - Framer Motion
 
-## Running it locally
+## Ownership and copyright
 
-```bash
-npm install
-npm run dev
-```
+Copyright (c) 2026 Mahamat Youssouf Taher Adam. All rights reserved.
 
-Then open http://localhost:5173.
+This is my personal portfolio. The design, the code, the written content, the
+photographs, the project screenshots and my CV are all my own work, and they
+represent me personally rather than a template or a product.
 
-To produce a production build:
+No licence is granted. This repository is public only because GitHub Pages
+requires it in order to serve the site. It is not published as something to
+reuse. You are welcome to read the code. You may not copy it, reuse it,
+republish it, redeploy it, or present it or any part of it as your own work,
+in whole or in part, without my written permission.
 
-```bash
-npm run build
-npm run preview
-```
-
-## Deployment
-
-Pushing to `main` triggers the workflow in `.github/workflows/deploy.yml`, which
-builds the site and publishes it to GitHub Pages.
+If something here is useful to you, please ask me first. The contact form on the
+site reaches me directly.
 
 ## Notes
 
