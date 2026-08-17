@@ -4,6 +4,14 @@
 
 html {
   scroll-behavior: smooth;
+  /* Scrollbars and form control chrome are drawn by the browser from the
+     document's colour scheme, so it belongs here and not on individual elements.
+     Also set inline on <html> so it applies before this stylesheet loads. */
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {

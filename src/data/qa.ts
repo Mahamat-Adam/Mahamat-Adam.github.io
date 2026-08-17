@@ -57,7 +57,7 @@ export const qaBank: QA[] = [
     chip: 'Goodbye',
     keywords: ['bye', 'goodbye', 'see you', 'see ya', 'cya', 'later', 'take care'],
     answer:
-      "Thanks for stopping by. If you'd like to talk to Mahamat directly, his email is in the Contact section at the bottom of the page. Have a good one.",
+      "Thanks for stopping by. If you'd like to talk to Mahamat directly, there's a contact form in the Contact section at the bottom of the page. Have a good one.",
     followups: ['contact', 'cv'],
   },
   {
@@ -361,7 +361,7 @@ export const qaBank: QA[] = [
       'remote',
     ],
     answer:
-      "He's based in Kuala Lumpur, Malaysia. For questions about relocation or remote work, best to ask him directly; the Contact section has his email.",
+      "He's based in Kuala Lumpur, Malaysia. For questions about relocation or remote work, best to ask him directly; the Contact section has a form that reaches him.",
     followups: ['contact', 'availability', 'who'],
   },
   {
@@ -381,7 +381,7 @@ export const qaBank: QA[] = [
       'job offer',
     ],
     answer:
-      "Yes, he's open to software engineering, frontend and solution engineering opportunities. The fastest way to start a conversation is email or LinkedIn, both in the Contact section.",
+      "Yes, he's open to software engineering, frontend and solution engineering opportunities. The fastest way to start a conversation is the contact form or LinkedIn, both in the Contact section.",
     followups: ['contact', 'cv', 'internship'],
   },
   {
@@ -397,7 +397,7 @@ export const qaBank: QA[] = [
     chip: 'How do I reach him?',
     keywords: ['contact', 'reach', 'email', 'linkedin', 'message', 'get in touch', 'connect'],
     answer:
-      "Head to the Contact section at the bottom of the page; there's a button that reveals his email, plus his LinkedIn. He reads everything that lands in his inbox.",
+      "Head to the Contact section at the bottom of the page; there's a short form that sends him a message, plus his LinkedIn. He reads everything that lands in his inbox.",
     followups: ['cv', 'availability', 'who'],
   },
   {
@@ -662,7 +662,7 @@ export const qaBank: QA[] = [
       'devops',
     ],
     answer:
-      "That one isn't on his CV, so I won't guess. His documented stack is React, TypeScript, JavaScript, Tailwind CSS, Three.js, Framer Motion, PHP/Laravel, Python, Flutter, MySQL and REST APIs. For anything outside that, ask him directly by email.",
+      "That one isn't on his CV, so I won't guess. His documented stack is React, TypeScript, JavaScript, Tailwind CSS, Three.js, Framer Motion, PHP/Laravel, Python, Flutter, MySQL and REST APIs. For anything outside that, ask him directly through the contact form.",
     followups: ['stack', 'contact', 'learning'],
   },
   {
@@ -712,7 +712,7 @@ export const qaBank: QA[] = [
       'passport',
     ],
     answer:
-      "That's a question for Mahamat directly rather than for me. Email him from the Contact section and he'll answer it properly.",
+      "That's a question for Mahamat directly rather than for me. Send him a message from the Contact section and he'll answer it properly.",
     followups: ['contact', 'location', 'startdate'],
   },
   {
@@ -728,7 +728,7 @@ export const qaBank: QA[] = [
       'budget',
     ],
     answer:
-      "Compensation is a conversation for Mahamat himself. Drop him an email from the Contact section and he'll discuss it with you.",
+      "Compensation is a conversation for Mahamat himself. Drop him a message from the Contact section and he'll discuss it with you.",
     followups: ['contact', 'availability', 'rolewanted'],
   },
   {
@@ -767,7 +767,7 @@ export const qaBank: QA[] = [
       'robot',
     ],
     answer:
-      "I'm MahamatBot, a small scripted assistant, not a live AI. Mahamat curated my answers and I match your question against them by keywords. Ask me anything about him; if I don't know it, I'll point you to his email.",
+      "I'm MahamatBot, a small scripted assistant, not a live AI. Mahamat curated my answers and I match your question against them by keywords. Ask me anything about him; if I don't know it, I'll point you to the contact form.",
     followups: ['who', 'contact', 'football'],
   },
 ]
@@ -775,4 +775,4 @@ export const qaBank: QA[] = [
 export const starterChips = ['internship', 'fyp', 'threed', 'whyhire', 'football']
 
 export const fallbackAnswer =
-  "That one's beyond my script. I only know what Mahamat taught me. For anything deeper, email him directly from the Contact section; he'd genuinely like to hear from you."
+  "That one's beyond my script. I only know what Mahamat taught me. For anything deeper, message him directly from the Contact section; he'd genuinely like to hear from you."

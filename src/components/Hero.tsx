@@ -6,10 +6,6 @@ import { openExternal } from '../lib/openExternal'
 import { DocViewer } from './DocViewer'
 import { GithubIcon } from './icons'
 
-function mailHref() {
-  return `mailto:${profile.emailUser}@${profile.emailDomain}`
-}
-
 export function Hero() {
   const [cvOpen, setCvOpen] = useState(false)
   return (
@@ -74,8 +70,8 @@ export function Hero() {
           </button>
           <div className="flex w-full items-center justify-center gap-4 sm:w-auto sm:justify-start">
             <a
-              href={mailHref()}
-              aria-label="Email"
+              href="#contact"
+              aria-label="Send me a message"
               className="rounded-full border border-line p-3 text-zinc-600 transition-colors hover:border-accent hover:text-accentInk dark:hover:text-accentSoft dark:border-nline dark:text-zinc-400"
             >
               <Mail size={16} />

@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" class="dark">
+<!-- Set inline rather than only in CSS: the browser builds its own UI (scrollbars,
+     form control chrome) from this, and a stylesheet can arrive too late to count. -->
+<html lang="en" class="dark" style="color-scheme: dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,10 +41,12 @@
       ;(function () {
         try {
           var t = localStorage.getItem('theme')
-          if (t === 'light') document.documentElement.classList.remove('dark')
-          else document.documentElement.classList.add('dark')
+          var light = t === 'light'
+          document.documentElement.classList.toggle('dark', !light)
+          document.documentElement.style.colorScheme = light ? 'light' : 'dark'
         } catch (e) {
           document.documentElement.classList.add('dark')
+          document.documentElement.style.colorScheme = 'dark'
         }
       })()
     </script>

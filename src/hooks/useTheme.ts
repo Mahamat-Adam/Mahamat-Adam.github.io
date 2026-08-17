@@ -5,6 +5,8 @@ export function useTheme() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark)
+    // Keeps native popups and scrollbars in step with the toggle, not just the page.
+    document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
     try {
       localStorage.setItem('theme', dark ? 'dark' : 'light')
     } catch {

@@ -8,9 +8,15 @@ export const profile = {
   github: 'https://github.com/Mahamat-Adam',
   cvPath: '/docs/Mahamat-Adam-Resume.pdf',
   // Assembled at runtime so the address never sits in the HTML as plain text.
+  // Only used for the fallback if the contact form's service is unreachable.
   emailUser: 'mahammadadam446',
   emailDomain: 'gmail.com',
+  // Public by design: this key can only send mail to the inbox it was issued
+  // for, so it is safe in client code. Not a secret, not a credential.
+  formKey: '23ab7219-7345-4aab-9ec9-9c0d3568cb29',
 }
+
+export const contactTopics = ['Job opportunity', 'Project', 'Collaboration', 'Something else']
 
 export const aboutParagraphs = [
   `Hello, I'm Mahamat, a software engineer who likes building things people can
