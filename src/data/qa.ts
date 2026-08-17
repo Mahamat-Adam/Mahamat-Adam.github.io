@@ -21,13 +21,25 @@ export const qaBank: QA[] = [
       'good morning',
       'good afternoon',
       'good evening',
-      'salam',
-      'assalamualaikum',
       'greetings',
     ],
     answer:
       "Hello! I'm MahamatBot. I can tell you about Mahamat's internship work, his final year project, the 3D sites he has built, his stack, his education, or how to reach him. What would you like to know?",
     followups: ['internship', 'threed', 'fyp', 'contact'],
+  },
+  {
+    id: 'salam',
+    chip: 'Salam',
+    keywords: [
+      'assalamualaikum',
+      'asalamualaikum',
+      'salamualaikum',
+      'salam alaikum',
+      'as salamu alaikum',
+    ],
+    answer:
+      "Wa alaikum assalam wa rahmatullahi wa barakatuh. I'm Mahamat's assistant. Ask me about his internship at Awesomeree in Malaysia, his final year project, or the sites he has built.",
+    followups: ['internship', 'fyp', 'threed'],
   },
   {
     id: 'howareyou',

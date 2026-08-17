@@ -101,6 +101,9 @@ html[lang='ar'] * {
    Desktop keeps its native scrollbar. */
 .strip-scroll {
   padding-bottom: 0.5rem;
+  /* html sets scroll-behavior: smooth, which would animate each wheel notch and
+     make the strip lag behind the pointer. Wheel scrolling wants to be immediate. */
+  scroll-behavior: auto;
 }
 @media (max-width: 767px) {
   .strip-scroll {

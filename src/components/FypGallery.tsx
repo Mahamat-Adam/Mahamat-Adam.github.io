@@ -200,7 +200,7 @@ export function FypGallery() {
 
       <Reveal>
         <StripLabel kicker={ui.fyp.panelKicker} note={ui.fyp.panelNote} />
-        <ScrollStrip className="flex snap-x snap-mandatory gap-3 overflow-x-auto md:gap-4">
+        <ScrollStrip className="flex snap-x snap-proximity gap-3 overflow-x-auto md:gap-4">
           {panelShots.map((src, i) => (
             <button
               key={src}

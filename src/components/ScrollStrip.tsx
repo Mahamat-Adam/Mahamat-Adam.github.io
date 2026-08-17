@@ -52,6 +52,29 @@ export function ScrollStrip({ children, className = '' }: Props) {
     }
   }, [measure])
 
+  // A mouse wheel only produces deltaY, and a horizontal scroller ignores it, so
+  // on a desktop with an ordinary mouse these strips could not be scrolled at all.
+  // Map the vertical wheel onto horizontal movement, but hand the event back to the
+  // page once the strip reaches either end, otherwise the pointer gets trapped and
+  // the page stops scrolling while the cursor is over a strip.
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const onWheel = (e: WheelEvent) => {
+      const max = el.scrollWidth - el.clientWidth
+      if (max <= 0) return // nothing to scroll
+      if (e.deltaX !== 0) return // a trackpad is already sending horizontal intent
+      const atStart = e.deltaY < 0 && el.scrollLeft <= 0
+      const atEnd = e.deltaY > 0 && el.scrollLeft >= max - 1
+      if (atStart || atEnd) return
+      e.preventDefault()
+      el.scrollLeft = Math.min(max, Math.max(0, el.scrollLeft + e.deltaY))
+    }
+    // passive: false, or preventDefault is ignored and the page scrolls anyway
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [])
+
   // The scroller is pinned LTR: screenshots carry no reading order, and under RTL
   // scrollLeft counts down from zero, which would run the progress bar below
   // backwards while the thumb is still positioned from the physical left.
