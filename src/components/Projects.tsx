@@ -40,24 +40,42 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
   const closeRef = useRef<HTMLButtonElement>(null)
   const [idx, setIdx] = useState(0)
   const [zoomed, setZoomed] = useState(false)
+  // Actual-size view inside the enlarged overlay. Sizing the image up makes the
+  // box overflow, so one finger pans it as normal scrolling; a CSS transform
+  // would scale it too but reintroduces the iOS tap offset we removed earlier.
+  const [fullSize, setFullSize] = useState(false)
   const gallery = p.images ?? (p.image ? [p.image] : [])
   const many = gallery.length > 1
   const move = (d: number) => setIdx((i) => (i + d + gallery.length) % gallery.length)
 
+  // Locking the page and taking focus happens once. Keeping it out of the key
+  // effect below matters: that one re-binds as the view state changes, and
+  // re-running this with it would steal focus back on every zoom toggle.
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    closeRef.current?.focus()
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [])
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setZoomed((z) => (z ? false : (onClose(), false)))
+      // Escape steps back one level at a time: actual size, enlarged, then shut.
+      if (e.key === 'Escape') {
+        if (fullSize) setFullSize(false)
+        else if (zoomed) setZoomed(false)
+        else onClose()
+      }
       if (e.key === 'ArrowLeft') move(-1)
       if (e.key === 'ArrowRight') move(1)
     }
     window.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
-    closeRef.current?.focus()
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
-    }
-  }, [onClose])
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose, zoomed, fullSize, gallery.length])
+
+  // A different screenshot should arrive fitted, not mid-pan at actual size.
+  useEffect(() => setFullSize(false), [idx])
 
   return (
     <motion.div
@@ -157,27 +175,41 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               onClick={(e) => {
                 e.stopPropagation()
                 setZoomed(false)
+                setFullSize(false)
               }}
-              className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-3"
+              className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-black/90 p-3"
             >
-              {/* opens fitted so the whole screenshot is visible; pinch to
-                  zoom in from there, and the box pans once zoomed */}
+              {/* Opens fitted so the whole screenshot is visible; tap it for
+                  actual size, then one finger drags it around. */}
               <div
                 onClick={(e) => e.stopPropagation()}
-                className="max-h-full max-w-full overflow-auto overscroll-contain"
-                style={{ touchAction: 'pinch-zoom' }}
+                className={`overflow-auto overscroll-contain ${
+                  fullSize ? 'h-[88svh] w-full' : 'max-h-full max-w-full'
+                }`}
+                // pan-x/pan-y lets one finger drag the enlarged image. pinch-zoom
+                // is deliberately absent: the browser's pinch scales the whole
+                // PAGE, taking the backdrop with it. Tap is the zoom here.
+                style={{ touchAction: fullSize ? 'pan-x pan-y' : 'none' }}
               >
                 <img
                   src={gallery[idx]}
                   alt={`${p.title} screenshot, enlarged`}
-                  className="max-h-[88svh] max-w-full cursor-zoom-out object-contain"
-                  onClick={() => setZoomed(false)}
+                  className={
+                    fullSize
+                      ? 'max-w-none cursor-zoom-out'
+                      : 'max-h-[88svh] max-w-full cursor-zoom-in object-contain'
+                  }
+                  onClick={() => setFullSize((f) => !f)}
                 />
               </div>
+              <p className="pointer-events-none mt-3 font-mono text-[11px] text-white/50 sm:hidden">
+                {fullSize ? 'drag to look around · tap to fit' : 'tap the image for actual size'}
+              </p>
               <button
                 onClick={(e) => {
                   e.stopPropagation()
                   setZoomed(false)
+                  setFullSize(false)
                 }}
                 aria-label="Close enlarged view"
                 className="absolute right-4 top-4 rounded-full bg-white/15 p-2.5 text-white backdrop-blur transition-colors hover:bg-white/25"

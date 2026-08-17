@@ -25,6 +25,12 @@ function Lightbox({
   onMove: (d: number) => void
 }) {
   const closeRef = useRef<HTMLButtonElement>(null)
+  // Zoom by swapping the image to its natural size so the box genuinely
+  // overflows: panning is then native scrolling, which one finger can drive.
+  // Scaling with a transform instead would re-introduce the iOS tap offset.
+  const [zoom, setZoom] = useState(false)
+
+  useEffect(() => setZoom(false), [state.index])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -52,16 +58,27 @@ function Lightbox({
       className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
-      {/* opens fitted so the whole screenshot is visible; pinch to zoom in */}
+      {/* Opens fitted so the whole screenshot is visible; tap it for actual size. */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="max-h-[70svh] max-w-full overflow-auto overscroll-contain rounded-xl sm:max-h-[85svh]"
-        style={{ touchAction: 'pinch-zoom' }}
+        className={`overflow-auto overscroll-contain rounded-xl ${
+          zoom ? 'h-[70svh] w-full sm:h-[85svh]' : 'max-h-[70svh] max-w-full sm:max-h-[85svh]'
+        }`}
+        // pan-x/pan-y lets one finger drag the zoomed image. pinch-zoom is
+        // deliberately absent: the browser's pinch scales the whole PAGE, which
+        // drags the backdrop and thumbnails along with it. Tapping for actual
+        // size is the zoom here, so the gesture is not needed.
+        style={{ touchAction: zoom ? 'pan-x pan-y' : 'none' }}
       >
         <img
           src={state.list[state.index]}
           alt={`System screenshot ${state.index + 1}`}
-          className="max-h-[70svh] max-w-full object-contain sm:max-h-[85svh]"
+          onClick={() => setZoom((z) => !z)}
+          className={
+            zoom
+              ? 'max-w-none cursor-zoom-out'
+              : 'max-h-[70svh] max-w-full cursor-zoom-in object-contain sm:max-h-[85svh]'
+          }
         />
       </div>
 
@@ -89,6 +106,11 @@ function Lightbox({
         >
           <ChevronRight size={22} />
         </button>
+      </div>
+      <div className="pointer-events-none mt-3 sm:hidden">
+        <p className="font-mono text-[11px] text-white/50">
+          {zoom ? 'drag to look around · tap to fit' : 'tap the image for actual size'}
+        </p>
       </div>
       <button
         ref={closeRef}
