@@ -1,6 +1,7 @@
+import { useUi } from '../data/ui'
 import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'framer-motion'
-import { aboutParagraphs, stats } from '../data/profile'
+import { useContent } from '../data/content'
 import { PhotoMarquee } from './PhotoMarquee'
 import { Reveal } from './Reveal'
 import { Section } from './Section'
@@ -41,8 +42,10 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 }
 
 export function About() {
+  const ui = useUi()
+  const { aboutParagraphs, stats } = useContent()
   return (
-    <Section id="about" kicker="Who am I?" title="A builder at heart">
+    <Section id="about" kicker={ui.about.kicker} title={ui.about.title}>
       <div className="grid gap-10 md:grid-cols-5">
         <div className="space-y-5 text-base leading-relaxed text-zinc-700 md:col-span-3 dark:text-zinc-300">
           {aboutParagraphs.map((p, i) => (

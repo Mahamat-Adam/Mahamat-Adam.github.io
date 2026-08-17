@@ -8,10 +8,11 @@ import { Fyp } from './components/Fyp'
 import { Hero } from './components/Hero'
 import { Nav } from './components/Nav'
 import { Projects } from './components/Projects'
+import { LangProvider } from './lib/lang'
 
 export default function App() {
   return (
-    <>
+    <LangProvider>
       <Nav />
       <main>
         <Hero />
@@ -24,6 +25,6 @@ export default function App() {
       </main>
       <Footer />
       <ChatBot />
-    </>
+    </LangProvider>
   )
 }

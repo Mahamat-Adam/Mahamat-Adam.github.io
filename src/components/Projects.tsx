@@ -1,12 +1,16 @@
+import { useUi } from '../data/ui'
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
-import { projects, type Project } from '../data/projects'
+import { useProjects } from '../data/content'
+import { type Project } from '../data/projects'
+import { useLang } from '../lib/lang'
 import { openExternal } from '../lib/openExternal'
 import { Reveal } from './Reveal'
 import { Section } from './Section'
 
 function ProjectImage({ p, src, className }: { p: Project; src?: string; className: string }) {
+  const ui = useUi()
   const [failed, setFailed] = useState(false)
   const resolved = src ?? p.image
   if (!resolved || failed) {
@@ -28,7 +32,7 @@ function ProjectImage({ p, src, className }: { p: Project; src?: string; classNa
   return (
     <img
       src={resolved}
-      alt={`${p.title} screenshot`}
+      alt={ui.projects.shotAlt(p.title)}
       loading="lazy"
       onError={() => setFailed(true)}
       className={`${className} object-cover object-top`}
@@ -37,6 +41,7 @@ function ProjectImage({ p, src, className }: { p: Project; src?: string; classNa
 }
 
 function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
+  const ui = useUi()
   const closeRef = useRef<HTMLButtonElement>(null)
   const [idx, setIdx] = useState(0)
   const [zoomed, setZoomed] = useState(false)
@@ -44,6 +49,10 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
   // box overflow, so one finger pans it as normal scrolling; a CSS transform
   // would scale it too but reintroduces the iOS tap offset we removed earlier.
   const [fullSize, setFullSize] = useState(false)
+  // RTL runs the sequence right to left, so the chevrons and arrow keys swap.
+  const { rtl } = useLang()
+  const Prev = rtl ? ChevronRight : ChevronLeft
+  const Next = rtl ? ChevronLeft : ChevronRight
   const gallery = p.images ?? (p.image ? [p.image] : [])
   const many = gallery.length > 1
   const move = (d: number) => setIdx((i) => (i + d + gallery.length) % gallery.length)
@@ -67,12 +76,12 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
         else if (zoomed) setZoomed(false)
         else onClose()
       }
-      if (e.key === 'ArrowLeft') move(-1)
-      if (e.key === 'ArrowRight') move(1)
+      if (e.key === 'ArrowLeft') move(rtl ? 1 : -1)
+      if (e.key === 'ArrowRight') move(rtl ? -1 : 1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [onClose, zoomed, fullSize, gallery.length])
+  }, [onClose, zoomed, fullSize, gallery.length, rtl])
 
   // A different screenshot should arrive fitted, not mid-pan at actual size.
   useEffect(() => setFullSize(false), [idx])
@@ -102,7 +111,8 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
         <div className="relative">
           <button
             onClick={() => setZoomed(true)}
-            aria-label="Enlarge screenshot"
+            data-probe="enlarge"
+            aria-label={ui.projects.enlarge}
             className="block w-full cursor-zoom-in"
           >
             <ProjectImage key={idx} p={p} src={gallery[idx]} className="h-56 w-full sm:h-72" />
@@ -110,8 +120,8 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
           <button
             ref={closeRef}
             onClick={onClose}
-            aria-label="Close"
-            className="absolute right-4 top-4 rounded-full bg-black/50 p-2 text-white backdrop-blur transition-transform hover:scale-105"
+            aria-label={ui.projects.close}
+            className="absolute end-4 top-4 rounded-full bg-black/50 p-2 text-white backdrop-blur transition-transform hover:scale-105"
           >
             <X size={18} />
           </button>
@@ -119,25 +129,27 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
             <>
               <button
                 onClick={() => move(-1)}
-                aria-label="Previous view"
-                className="absolute left-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105 sm:block"
+                data-probe="gal-prev"
+                aria-label={ui.projects.prev}
+                className="absolute start-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105 sm:block"
               >
-                <ChevronLeft size={24} />
+                <Prev size={24} />
               </button>
               <button
                 onClick={() => move(1)}
-                aria-label="Next view"
-                className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105 sm:block"
+                data-probe="gal-next"
+                aria-label={ui.projects.next}
+                className="absolute end-3 top-1/2 hidden -translate-y-1/2 rounded-full bg-black/60 p-3 text-white ring-1 ring-white/20 backdrop-blur transition-transform hover:scale-105 sm:block"
               >
-                <ChevronRight size={24} />
+                <Next size={24} />
               </button>
-              <span className="absolute bottom-3 right-4 hidden rounded-full bg-black/50 px-2.5 py-1 font-mono text-[11px] text-white backdrop-blur sm:block">
+              <span className="absolute bottom-3 end-4 hidden rounded-full bg-black/50 px-2.5 py-1 font-mono text-[11px] text-white backdrop-blur sm:block">
                 {idx + 1} / {gallery.length}
               </span>
             </>
           )}
-          <span className="pointer-events-none absolute bottom-3 left-4 flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-white backdrop-blur">
-            <Maximize2 size={11} /> tap to enlarge
+          <span className="pointer-events-none absolute bottom-3 start-4 flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-white backdrop-blur">
+            <Maximize2 size={11} /> {ui.projects.tapToEnlarge}
           </span>
         </div>
 
@@ -148,20 +160,22 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
           <div className="flex items-center justify-center gap-6 border-b border-line py-3 sm:hidden dark:border-nline">
             <button
               onClick={() => move(-1)}
-              aria-label="Previous view"
+              data-probe="gal-prev"
+              aria-label={ui.projects.prev}
               className="rounded-full border border-line p-2.5 text-zinc-600 transition-colors active:border-accent active:text-accentInk dark:border-nline dark:text-zinc-300 dark:active:text-accentSoft"
             >
-              <ChevronLeft size={20} />
+              <Prev size={20} />
             </button>
             <span className="min-w-14 text-center font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
               {idx + 1} / {gallery.length}
             </span>
             <button
               onClick={() => move(1)}
-              aria-label="Next view"
+              data-probe="gal-next"
+              aria-label={ui.projects.next}
               className="rounded-full border border-line p-2.5 text-zinc-600 transition-colors active:border-accent active:text-accentInk dark:border-nline dark:text-zinc-300 dark:active:text-accentSoft"
             >
-              <ChevronRight size={20} />
+              <Next size={20} />
             </button>
           </div>
         )}
@@ -193,7 +207,8 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               >
                 <img
                   src={gallery[idx]}
-                  alt={`${p.title} screenshot, enlarged`}
+                  data-probe="shot-large"
+                  alt={ui.projects.shotAltLarge(p.title)}
                   className={
                     fullSize
                       ? 'max-w-none cursor-zoom-out'
@@ -203,7 +218,7 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
                 />
               </div>
               <p className="pointer-events-none mt-3 font-mono text-[11px] text-white/50 sm:hidden">
-                {fullSize ? 'drag to look around · tap to fit' : 'tap the image for actual size'}
+                {fullSize ? ui.zoom.toFit : ui.zoom.toActual}
               </p>
               <button
                 onClick={(e) => {
@@ -211,8 +226,8 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
                   setZoomed(false)
                   setFullSize(false)
                 }}
-                aria-label="Close enlarged view"
-                className="absolute right-4 top-4 rounded-full bg-white/15 p-2.5 text-white backdrop-blur transition-colors hover:bg-white/25"
+                aria-label={ui.projects.closeEnlarged}
+                className="absolute end-4 top-4 rounded-full bg-white/15 p-2.5 text-white backdrop-blur transition-colors hover:bg-white/25"
               >
                 <X size={18} />
               </button>
@@ -260,13 +275,15 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
 }
 
 export function Projects() {
+  const ui = useUi()
+  const projects = useProjects()
   const [openId, setOpenId] = useState<string | null>(null)
   const open = projects.find((p) => p.id === openId) ?? null
 
   return (
-    <Section id="projects" kicker="Projects" title="Selected work">
+    <Section id="projects" kicker={ui.projects.kicker} title={ui.projects.title}>
       <p className="-mt-6 mb-10 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400">
-        A mix of live production sites and interactive 3D builds. Click any card for the full story.
+        {ui.projects.intro}
       </p>
       <div className="grid min-w-0 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((p, i) => {
@@ -281,7 +298,7 @@ export function Projects() {
               <motion.button
                 onClick={() => setOpenId(p.id)}
                 whileHover={{ y: -5 }}
-                className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-card text-left dark:border-nline dark:bg-panel"
+                className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-card text-start dark:border-nline dark:bg-panel"
               >
                 <div className="overflow-hidden">
                   <ProjectImage

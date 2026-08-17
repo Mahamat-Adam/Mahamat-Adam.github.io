@@ -33,8 +33,11 @@ export function PhotoMarquee({
     return () => ro.disconnect()
   }, [speed, images])
 
+  // dir is pinned LTR below: photos carry no reading order, and the row's
+  // margin-right gutter is what makes translateX(-50%) land exactly one copy in.
+  // Mirroring it would move the gutter to the wrong side and the loop would seam.
   return (
-    <div className="overflow-hidden">
+    <div dir="ltr" className="overflow-hidden">
       <div
         ref={rowRef}
         className={`marquee-row ${reverse ? 'reverse' : ''}`}

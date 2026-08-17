@@ -1,7 +1,8 @@
+import { useUi } from '../data/ui'
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Maximize2, X } from 'lucide-react'
-import { fieldRole } from '../data/profile'
+import { useContent } from '../data/content'
 import { PhotoMarquee } from './PhotoMarquee'
 
 const stripImages = Array.from(
@@ -10,6 +11,8 @@ const stripImages = Array.from(
 )
 
 function FieldRoleModal({ onClose }: { onClose: () => void }) {
+  const ui = useUi()
+  const { fieldRole } = useContent()
   const closeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -47,15 +50,15 @@ function FieldRoleModal({ onClose }: { onClose: () => void }) {
         <div className="relative">
           <img
             src={fieldRole.lead}
-            alt="Hospital covered by the asset registration project"
+            alt={ui.experience.hospitalAlt}
             className="h-56 w-full object-cover sm:h-72"
           />
           <button
             ref={closeRef}
             onClick={onClose}
-            aria-label="Close"
+            aria-label={ui.experience.close}
             style={{ touchAction: 'manipulation' }}
-            className="absolute right-4 top-4 rounded-full bg-black/50 p-2.5 text-white backdrop-blur transition-transform hover:scale-105"
+            className="absolute end-4 top-4 rounded-full bg-black/50 p-2.5 text-white backdrop-blur transition-transform hover:scale-105"
           >
             <X size={18} />
           </button>
@@ -66,7 +69,9 @@ function FieldRoleModal({ onClose }: { onClose: () => void }) {
             {fieldRole.period} · {fieldRole.location}
           </p>
           <h3 className="mt-2 font-display text-2xl font-bold md:text-3xl">{fieldRole.role}</h3>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{fieldRole.company}</p>
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            <span dir="ltr">{fieldRole.company}</span>
+          </p>
 
           <div className="mt-6 grid grid-cols-1 gap-3 min-[360px]:grid-cols-3">
             {fieldRole.highlights.map((h) => (
@@ -93,7 +98,7 @@ function FieldRoleModal({ onClose }: { onClose: () => void }) {
 
         <div className="border-t border-line pb-6 pt-5 dark:border-nline">
           <p className="mb-3 px-6 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 md:px-8 dark:text-zinc-400">
-            On site
+            {ui.experience.onSite}
           </p>
           <PhotoMarquee images={stripImages} heightClass="h-36 md:h-44" speed={70} />
         </div>
@@ -103,6 +108,8 @@ function FieldRoleModal({ onClose }: { onClose: () => void }) {
 }
 
 export function FieldRoleCard() {
+  const ui = useUi()
+  const { fieldRole } = useContent()
   const [open, setOpen] = useState(false)
 
   return (
@@ -110,12 +117,12 @@ export function FieldRoleCard() {
       <motion.button
         onClick={() => setOpen(true)}
         whileHover={{ y: -4 }}
-        className="group grid w-full overflow-hidden rounded-2xl border border-line bg-card text-left sm:grid-cols-2 dark:border-nline dark:bg-panel"
+        className="group grid w-full overflow-hidden rounded-2xl border border-line bg-card text-start sm:grid-cols-2 dark:border-nline dark:bg-panel"
       >
         <div className="overflow-hidden">
           <img
             src={fieldRole.lead}
-            alt="Hospital covered by the asset registration project"
+            alt={ui.experience.hospitalAlt}
             loading="lazy"
             className="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] sm:h-full"
           />
@@ -126,13 +133,13 @@ export function FieldRoleCard() {
           </p>
           <h3 className="mt-2 font-display text-lg font-bold md:text-xl">{fieldRole.role}</h3>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            {fieldRole.company} · {fieldRole.location}
+            <span dir="ltr">{fieldRole.company}</span> · {fieldRole.location}
           </p>
           <p className="mt-4 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
             {fieldRole.summary}
           </p>
           <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accentInk dark:text-accentSoft">
-            See the project <Maximize2 size={13} />
+            {ui.experience.seeProject} <Maximize2 size={13} />
           </span>
         </div>
       </motion.button>

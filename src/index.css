@@ -34,6 +34,25 @@ a {
   @apply bg-accent/30;
 }
 
+/* Arabic. One family covers display, body and the mono labels alike: none of the
+   three Latin families here carry Arabic glyphs, and there is no monospace Arabic
+   worth falling back to. Google's stylesheet is split by unicode-range, so the
+   font file is only fetched once Arabic characters are actually on the page. */
+html[lang='ar'] body,
+html[lang='ar'] .font-display,
+html[lang='ar'] .font-body,
+html[lang='ar'] .font-mono {
+  font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+}
+
+/* Arabic letters join to their neighbours, and letter-spacing prises those joins
+   apart into separated, unreadable glyphs. This design leans on tracking utilities
+   throughout its kickers and labels, so they have to be neutralised wholesale
+   rather than hunted down one at a time. */
+html[lang='ar'] * {
+  letter-spacing: normal !important;
+}
+
 /* Infinite photo strip. The row must size to its content, and items use
    margin-right (not flex gap) so translateX(-50%) lands exactly one copy in. */
 .marquee-row {

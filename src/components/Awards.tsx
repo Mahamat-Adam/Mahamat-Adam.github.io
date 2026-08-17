@@ -1,21 +1,24 @@
+import { useUi } from '../data/ui'
 import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { Award, BadgeCheck, Maximize2 } from 'lucide-react'
-import { certifications, deansList, spokenLanguages } from '../data/profile'
+import { certifications, useContent } from '../data/content'
 import { DocViewer } from './DocViewer'
 import { Reveal } from './Reveal'
 import { Section } from './Section'
 
 export function Awards() {
+  const ui = useUi()
+  const { deansList, spokenLanguages } = useContent()
   const [certOpen, setCertOpen] = useState(false)
   return (
-    <Section id="awards" kicker="Awards & Certifications" title="On the record">
+    <Section id="awards" kicker={ui.awards.kicker} title={ui.awards.title}>
       <div className="grid gap-8 lg:grid-cols-5">
         <Reveal className="min-w-0 lg:col-span-3">
           <article className="grid overflow-hidden rounded-2xl border border-line bg-card sm:grid-cols-2 dark:border-nline dark:bg-panel">
             <img
               src={deansList.photo}
-              alt="Mahamat holding his Dean's List certificates at UTHM"
+              alt={ui.awards.deansAlt}
               loading="lazy"
               className="aspect-[3/4] w-full object-cover object-[50%_28%] sm:aspect-auto sm:h-full"
             />
@@ -31,7 +34,7 @@ export function Awards() {
                 onClick={() => setCertOpen(true)}
                 className="mt-5 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-accentInk hover:underline dark:text-accentSoft"
               >
-                View certificate <Maximize2 size={13} />
+                {ui.awards.viewCertificate} <Maximize2 size={13} />
               </button>
             </div>
           </article>
@@ -40,7 +43,7 @@ export function Awards() {
         <div className="flex min-w-0 flex-col gap-8 lg:col-span-2">
           <Reveal delay={0.1}>
             <article className="rounded-2xl border border-line bg-card p-5 sm:p-7 dark:border-nline dark:bg-panel">
-              <h3 className="font-display text-lg font-bold">Certifications</h3>
+              <h3 className="font-display text-lg font-bold">{ui.awards.certifications}</h3>
               <ul className="mt-4 space-y-3">
                 {certifications.map((c) => (
                   <li key={c.name} className="flex items-start gap-3">
@@ -61,7 +64,7 @@ export function Awards() {
           </Reveal>
           <Reveal delay={0.18}>
             <article className="rounded-2xl border border-line bg-card p-5 sm:p-7 dark:border-nline dark:bg-panel">
-              <h3 className="font-display text-lg font-bold">Spoken languages</h3>
+              <h3 className="font-display text-lg font-bold">{ui.awards.spokenLanguages}</h3>
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {spokenLanguages.map((l) => (
                   <span
@@ -80,7 +83,7 @@ export function Awards() {
       <AnimatePresence>
         {certOpen && (
           <DocViewer
-            title="Dean's List certificate"
+            title={ui.awards.certTitle}
             image="/img/cert-preview.jpg"
             onClose={() => setCertOpen(false)}
           />

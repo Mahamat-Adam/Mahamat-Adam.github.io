@@ -1,4 +1,5 @@
-import { education, experience, skillGroups } from '../data/profile'
+import { useUi } from '../data/ui'
+import { useContent } from '../data/content'
 import { FieldRoleCard } from './FieldRoleCard'
 import { PhotoMarquee } from './PhotoMarquee'
 import { Reveal } from './Reveal'
@@ -10,8 +11,10 @@ const officeImages = Array.from(
 )
 
 export function Experience() {
+  const ui = useUi()
+  const { education, experience, skillGroups } = useContent()
   return (
-    <Section id="experience" kicker="Experience" title="Where I've been building">
+    <Section id="experience" kicker={ui.experience.kicker} title={ui.experience.title}>
       {/* min-w-0 on every grid child: without it a track stretches to the
  photo strip's full content width instead of the viewport. */}
       <div className="grid gap-8 lg:grid-cols-3">
@@ -24,7 +27,7 @@ export function Experience() {
               </span>
             </div>
             <p className="mt-1 text-sm text-accentInk dark:text-accentSoft">
-              {experience.company} · {experience.location}
+              <span dir="ltr">{experience.company}</span> · {experience.location}
             </p>
             <ul className="mt-6 grid gap-x-8 gap-y-4 md:grid-cols-2">
               {experience.bullets.map((b, i) => (
@@ -45,11 +48,13 @@ export function Experience() {
         <Reveal delay={0.1} className="order-5 min-w-0 lg:order-2">
           <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card dark:border-nline dark:bg-panel">
             <div className="p-7">
-              <h3 className="font-display text-lg font-bold">Education</h3>
+              <h3 className="font-display text-lg font-bold">{ui.experience.education}</h3>
               <p className="mt-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
                 {education.degree}
               </p>
-              <p className="mt-1 text-sm text-accentInk dark:text-accentSoft">{education.school}</p>
+              <p className="mt-1 text-sm text-accentInk dark:text-accentSoft">
+                <span dir="ltr">{education.school}</span>
+              </p>
               <p className="mt-1 font-mono text-xs text-zinc-500 dark:text-zinc-400">
                 {education.period} · {education.gpa}
               </p>
@@ -60,7 +65,7 @@ export function Experience() {
             </div>
             <img
               src="/img/education/uthm.jpg"
-              alt="Universiti Tun Hussein Onn Malaysia campus"
+              alt={ui.experience.campusAlt}
               loading="lazy"
               className="mt-auto h-48 w-full object-cover lg:h-56"
             />
@@ -69,14 +74,14 @@ export function Experience() {
 
         <Reveal delay={0.14} className="order-2 min-w-0 lg:order-3 lg:col-span-3">
           <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-            At the office
+            {ui.experience.office}
           </p>
           <PhotoMarquee images={officeImages} heightClass="h-40 md:h-52" />
         </Reveal>
 
         <Reveal delay={0.16} className="order-3 min-w-0 lg:order-4 lg:col-span-3">
           <article className="rounded-2xl border border-line bg-card p-7 md:p-9 dark:border-nline dark:bg-panel">
-            <h3 className="font-display text-lg font-bold">Toolbox</h3>
+            <h3 className="font-display text-lg font-bold">{ui.experience.toolbox}</h3>
             <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {skillGroups.map((g) => (
                 <div key={g.name}>

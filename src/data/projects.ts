@@ -17,7 +17,7 @@ export const projects: Project[] = [
   {
     id: 'roar-commerce',
     title: 'ROAR Commerce',
-    category: '3D corporate site transformation',
+    category: 'Corporate site rebuilt end to end',
     blurb:
       'Industrial-brutalist 3D transformation of an e-commerce operations site serving Malaysia and Singapore: WebGL conveyors, dispatch yards and a living sea chart.',
     detail: [
@@ -27,8 +27,8 @@ export const projects: Project[] = [
        cargo deliveries to marketplace docks, and a living nautical chart flies freight
        across South-East Asia. All of it procedural, no downloaded models.`,
       `Beyond the homepage, more than a dozen content pages were rebuilt into a shared
-       design system with reusable components, delivered as a scoped WordPress plugin
-       that leaves the rest of the site untouched.`,
+       design system with reusable components, delivered on WordPress. The work is
+       published and official, and you can reach it through the link below.`,
     ],
     tech: ['Three.js', 'WebGL', 'JavaScript', 'CSS', 'WordPress'],
     link: 'https://roarcommerce.co',
@@ -39,7 +39,7 @@ export const projects: Project[] = [
   {
     id: 'awesomeree-ai',
     title: 'Awesomeree AI',
-    category: 'Live · 3D landing experience',
+    category: 'Live · interactive mascot landing',
     blurb:
       'Neo-brutalist landing page I built for Awesomeree, fronted by an interactive WebGL mascot. Live in production.',
     detail: [
@@ -48,10 +48,10 @@ export const projects: Project[] = [
        tracks your cursor, waves, blinks and reacts, while procedural 3D models of the
        company's products parade across the hero.`,
       `I took the approved design prototype through more than a dozen refinement
-       rounds (responsive re-composition for mobile, animation tuning, performance
-       warm-up for the 3D scene), then packaged the whole page as a cleanly scoped
-       WordPress plugin and helped carry it to the live production homepage, including
-       SEO setup and a working demo-request pipeline.`,
+       rounds: responsive re-composition for mobile, animation tuning, and performance
+       warm-up for the 3D scene. I then uploaded and published it on WordPress,
+       replacing the previous homepage design with my new one once management signed
+       off, and set up SEO along with a working demo-request pipeline.`,
     ],
     tech: ['Three.js', 'WebGL', 'JavaScript', 'CSS', 'WordPress'],
     link: 'https://awesomeree.com.my',
@@ -62,7 +62,7 @@ export const projects: Project[] = [
   {
     id: 'scooter-experience',
     title: 'Electric Scooter Experience',
-    category: 'Scroll-driven 3D brand site',
+    category: 'Procedural 3D brand experience',
     blurb:
       'A fully procedural 3D scooter rides a procedural street as you scroll, with 9 routes, a 13-model garage and live 3D in every card.',
     detail: [
@@ -87,7 +87,7 @@ export const projects: Project[] = [
   {
     id: 'games-room',
     title: 'Games-Room Collection',
-    category: 'Scroll-scrubbed 3D product film',
+    category: 'One table, four identities',
     blurb:
       'One persistent 3D table plays four identities (billiards, air hockey, ping-pong, dining), all scrubbed by scroll.',
     detail: [
@@ -97,7 +97,7 @@ export const projects: Project[] = [
        four-in-one story. Every phase is deterministic and scrubbable in both directions.`,
       `Around the film: an interactive "will it fit your room" planner with sliders and
        honest PERFECT / SNUG / WON'T FIT verdicts, per-product 3D pages for the foosball
-       and air-hockey lines, a persistent basket, and a curated buyer-photo marquee.`,
+       and air-hockey lines, a persistent basket, and a curated marquee of buyer photos and reviews.`,
     ],
     tech: ['React', 'TypeScript', 'Three.js (R3F)', 'Tailwind CSS', 'Framer Motion'],
     image: '/img/projects/games-room.jpg',
@@ -112,7 +112,7 @@ export const projects: Project[] = [
   {
     id: 'sensor-bins',
     title: 'Premium Bin Showcase',
-    category: 'Interactive 3D one-pager',
+    category: 'A demo you can press',
     blurb:
       'Tap the pedal and the 3D bin opens with a soft-close lid, plus an exploded-view scroll film and live finish swatches.',
     detail: [
@@ -137,7 +137,7 @@ export const projects: Project[] = [
   {
     id: 'racing-chair',
     title: 'Racing Chair One-Pager',
-    category: 'Cinematic scroll film',
+    category: 'Day-to-night cinematic film',
     blurb:
       'Scrolling reclines the 3D chair from 90° to 155°, then the whole scene and the UI shift into night mode.',
     detail: [
@@ -156,7 +156,7 @@ export const projects: Project[] = [
   {
     id: 'helmet-site',
     title: 'Helmet Brand One-Pager',
-    category: 'Photography-led product site',
+    category: 'Photography-led product page',
     blurb:
       'An 18-colourway picker tints the whole stage per shade, with day/night visor states and an honest fit finder.',
     detail: [

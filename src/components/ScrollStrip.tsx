@@ -52,9 +52,12 @@ export function ScrollStrip({ children, className = '' }: Props) {
     }
   }, [measure])
 
+  // The scroller is pinned LTR: screenshots carry no reading order, and under RTL
+  // scrollLeft counts down from zero, which would run the progress bar below
+  // backwards while the thumb is still positioned from the physical left.
   return (
     <div>
-      <div ref={ref} className={`strip-scroll ${className}`}>
+      <div ref={ref} dir="ltr" className={`strip-scroll ${className}`}>
         {children}
       </div>
       {bar.needed && (

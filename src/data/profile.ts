@@ -16,8 +16,6 @@ export const profile = {
   formKey: '23ab7219-7345-4aab-9ec9-9c0d3568cb29',
 }
 
-export const contactTopics = ['Job opportunity', 'Project', 'Collaboration', 'Something else']
-
 export const aboutParagraphs = [
   `Hello, I'm Mahamat, a software engineer who likes building things people can
    actually feel: interfaces that move, 3D product experiences that respond to you,
@@ -35,14 +33,15 @@ export const aboutParagraphs = [
 ]
 
 export const stats = [
-  { value: 6, suffix: 'mo', label: 'production internship' },
-  { value: 161, suffix: '', label: 'tickets delivered' },
-  { value: 8, suffix: '', label: 'production web apps' },
-  { value: 2, suffix: '×', label: "dean's list, consecutive" },
-]
+  { value: 6, suffix: 'mo', key: 'internship', label: 'production internship' },
+  { value: 161, suffix: '', key: 'tickets', label: 'tickets delivered' },
+  { value: 8, suffix: '', key: 'apps', label: 'production web apps' },
+  { value: 2, suffix: '×', key: 'deans', label: "dean's list, consecutive" },
+] as const
 
 export const skillGroups = [
   {
+    key: 'web',
     name: 'Web Stack & Languages',
     items: [
       'React',
@@ -60,10 +59,12 @@ export const skillGroups = [
     ],
   },
   {
+    key: 'data',
     name: 'Databases & Data',
     items: ['MySQL', 'Relational DB Design', 'SQL', 'Data Modelling', 'MySQL Workbench'],
   },
   {
+    key: 'solutions',
     name: 'Solutions & Integration',
     items: [
       'RESTful APIs',
@@ -75,6 +76,7 @@ export const skillGroups = [
     ],
   },
   {
+    key: 'tools',
     name: 'Tools & Methods',
     items: ['Git', 'GitHub', 'Jira', 'VS Code', 'SDLC Documentation'],
   },
@@ -138,9 +140,9 @@ export const fieldRole = {
      degree.`,
   ],
   highlights: [
-    { value: '20', label: 'team members led' },
-    { value: '9', label: 'hospitals covered' },
-    { value: '20', label: 'medical centres' },
+    { value: '20', key: 'team', label: 'team members led' },
+    { value: '9', key: 'hospitals', label: 'hospitals covered' },
+    { value: '20', key: 'centres', label: 'medical centres' },
   ],
 }
 
@@ -168,3 +170,19 @@ export const certifications = [
 ]
 
 export const spokenLanguages = ['English (fluent)', 'Arabic (fluent)']
+
+export const fypIntro = [
+  `My final year project solved a real problem for a real client: Sahel Retail Ltd, a
+   multi-branch retailer in N'Djamena, Chad, ran every store on paper records and
+   spreadsheets, with no shared inventory view and no way for a customer to buy without
+   walking into a branch.`,
+  `I designed and built a complete commerce platform around it: a Flutter mobile app
+   where customers browse, pay by card, wallet or cash on delivery, and track orders on
+   a live timeline, backed by Laravel admin and seller web panels on one MySQL backend,
+   with role-based access control, seller approval gates, store activation, promo codes
+   and revenue analytics.`,
+  `The system passed all 49 test cases, went through user acceptance testing with 31
+   respondents including the client's own management, and earned an A+. A research paper
+   I co-authored on the system was accepted for publication in UTHM's Applied
+   Information Technology and Computer Science (AITCS) journal.`,
+]

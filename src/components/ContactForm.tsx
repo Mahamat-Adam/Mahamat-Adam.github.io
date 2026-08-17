@@ -1,6 +1,7 @@
+import { useUi } from '../data/ui'
 import { useState } from 'react'
 import { AlertCircle, CheckCircle2, Send } from 'lucide-react'
-import { contactTopics, profile } from '../data/profile'
+import { profile } from '../data/profile'
 
 type Status = 'idle' | 'sending' | 'sent' | 'failed'
 
@@ -9,6 +10,7 @@ const field =
 const label = 'mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-zinc-500'
 
 export function ContactForm() {
+  const ui = useUi()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [topic, setTopic] = useState('')
@@ -22,7 +24,7 @@ export function ContactForm() {
   // in the normal case.
   const fallbackHref = () => {
     const address = `${profile.emailUser}@${profile.emailDomain}`
-    const subject = topic ? `${topic} - ${name}` : `Portfolio message - ${name}`
+    const subject = `${topic} - ${name}`
     const body = `${message}\n\n--\n${name}\n${email}`
     return `mailto:${address}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
@@ -65,23 +67,23 @@ export function ContactForm() {
         className="rounded-2xl border border-line px-6 py-10 text-center dark:border-nline"
       >
         <CheckCircle2 className="mx-auto text-accent" size={30} />
-        <p className="mt-4 font-display text-lg text-ink dark:text-paper">Message sent</p>
+        <p className="mt-4 font-display text-lg text-ink dark:text-paper">{ui.form.sent}</p>
         <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400">
-          Thanks {name.split(' ')[0]}, it landed in my inbox. I&apos;ll reply to {email}.
+          {ui.form.sentBody(name.split(' ')[0], email)}
         </p>
       </div>
     )
   }
 
   return (
-    <form onSubmit={submit} className="text-left">
+    <form onSubmit={submit} className="text-start">
       {/* Bots fill hidden fields; people never see this one. */}
       <input type="checkbox" name="botcheck" tabIndex={-1} aria-hidden="true" className="hidden" />
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className={label} htmlFor="cf-name">
-            Name
+            {ui.form.name}
           </label>
           <input
             id="cf-name"
@@ -89,13 +91,13 @@ export function ContactForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoComplete="name"
-            placeholder="Your name"
+            placeholder={ui.form.namePlaceholder}
             className={field}
           />
         </div>
         <div>
           <label className={label} htmlFor="cf-email">
-            Email
+            {ui.form.email}
           </label>
           <input
             id="cf-email"
@@ -104,7 +106,7 @@ export function ContactForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
-            placeholder="you@example.com"
+            placeholder={ui.form.emailPlaceholder}
             className={field}
           />
         </div>
@@ -114,9 +116,9 @@ export function ContactForm() {
           by the OS and cannot take the brand colour, and four fixed choices do not
           need a popup at all. Real radios keep arrow-key navigation for free. */}
       <fieldset className="mt-4">
-        <legend className={label}>What is it about</legend>
+        <legend className={label}>{ui.form.topic}</legend>
         <div className="flex flex-wrap gap-2">
-          {contactTopics.map((t) => (
+          {ui.form.topics.map((t) => (
             <label key={t} className="cursor-pointer">
               <input
                 type="radio"
@@ -137,14 +139,14 @@ export function ContactForm() {
         </div>
         {topicError && (
           <p aria-live="polite" className="mt-2 text-xs text-accentInk dark:text-accentSoft">
-            Pick one of these so I know what your message is about.
+            {ui.form.topicRequired}
           </p>
         )}
       </fieldset>
 
       <div className="mt-4">
         <label className={label} htmlFor="cf-message">
-          Message
+          {ui.form.message}
         </label>
         <textarea
           id="cf-message"
@@ -152,7 +154,7 @@ export function ContactForm() {
           rows={5}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Tell me what you have in mind."
+          placeholder={ui.form.messagePlaceholder}
           className={`${field} resize-y`}
         />
       </div>
@@ -163,7 +165,7 @@ export function ContactForm() {
           disabled={status === 'sending'}
           className="flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95 disabled:scale-100 disabled:opacity-60"
         >
-          <Send size={15} /> {status === 'sending' ? 'Sending...' : 'Send message'}
+          <Send size={15} /> {status === 'sending' ? ui.form.sending : ui.form.send}
         </button>
 
         {status === 'failed' && (
@@ -172,13 +174,13 @@ export function ContactForm() {
             className="flex flex-col items-center gap-2 text-center text-sm text-zinc-600 dark:text-zinc-400"
           >
             <p className="flex items-center gap-1.5 text-accentInk dark:text-accentSoft">
-              <AlertCircle size={15} aria-hidden="true" /> That didn&apos;t go through.
+              <AlertCircle size={15} aria-hidden="true" /> {ui.form.failed}
             </p>
             <a
               href={fallbackHref()}
               className="underline decoration-line underline-offset-4 transition-colors hover:text-accentInk dark:hover:text-accentSoft"
             >
-              Send it by email instead
+              {ui.form.fallback}
             </a>
           </div>
         )}

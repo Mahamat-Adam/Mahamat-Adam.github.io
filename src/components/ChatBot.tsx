@@ -1,7 +1,10 @@
+import { useUi } from '../data/ui'
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { MessageCircle, Send, X } from 'lucide-react'
-import { fallbackAnswer, qaBank, starterChips, type QA } from '../data/qa'
+import { useQaBank } from '../data/content'
+import { starterChips, type QA } from '../data/qa'
+import { useLang } from '../lib/lang'
 import { BackToTop } from './BackToTop'
 
 type Message = {
@@ -12,20 +15,49 @@ type Message = {
   shown: number
 }
 
+/**
+ * Strips the definite article and the pronoun endings Arabic attaches directly to
+ * words. Deliberately shallow, not a real stemmer: the suffix only comes off when
+ * at least three characters remain, so short words are left intact rather than
+ * being ground down into something that collides with everything.
+ */
+const stemWord = (w: string) => {
+  const x = w.replace(/^(وال|فال|بال|كال|لل|ال)/, '')
+  const suffix = x.match(/(هما|كما|هن|هم|كن|كم|نا|ها|ه|ك)$/)
+  return suffix && x.length - suffix[0].length >= 3 ? x.slice(0, -suffix[0].length) : x
+}
+
 const normalize = (s: string) =>
   s
     .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, ' ')
+    // Keep letters of ANY script plus digits. The previous version stripped
+    // everything outside a-z0-9, which reduced an Arabic question to an empty
+    // string, so it could never match a single keyword.
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    // Arabic diacritics and tatweel are decorative; drop them so a keyword matches
+    // whether or not the visitor typed them.
+    .replace(/[ً-ْـ]/g, '')
+    // Fold the spellings Arabic writers mix freely, so one keyword covers them all:
+    // the hamza forms of alef, alef maqsura, and ta marbuta.
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/ة/g, 'ه')
     .replace(/\s+/g, ' ')
     .trim()
+    // Arabic glues the definite article and possessive pronouns onto the word, so
+    // "مهاراته" and "المشاريع" would never equal the keywords "مهارات" and "مشاريع"
+    // under whole-word matching. Both sides go through the same light stemmer.
+    .split(' ')
+    .map(stemWord)
+    .join(' ')
 
-function match(input: string): QA | null {
+function match(input: string, bank: QA[]): QA | null {
   // Whole-word/phrase matching only; substring matches produce false hits
   // ("intern" inside "international", "what are you" inside "what are your").
   const q = ` ${normalize(input)} `
   let best: QA | null = null
   let bestScore = 0
-  for (const qa of qaBank) {
+  for (const qa of bank) {
     let score = 0
     for (const kw of qa.keywords) {
       const k = normalize(kw)
@@ -39,18 +71,29 @@ function match(input: string): QA | null {
   return bestScore >= 2 ? best : null
 }
 
-const chipsFor = (ids: string[]) => ids.filter((id) => qaBank.some((q) => q.id === id))
+const chipsFor = (bank: QA[], ids: string[]) => ids.filter((id) => bank.some((q) => q.id === id))
 
-const greeting: Message = {
+// Built from ui so it follows the language; a module const could not.
+const makeGreeting = (text: string): Message => ({
   role: 'bot',
-  text: "Hi! I'm MahamatBot, Mahamat's scripted assistant. Ask me anything about him, or tap a question below.",
+  text,
   chips: starterChips,
   shown: 0,
-}
+})
 
 export function ChatBot() {
+  const ui = useUi()
   const [open, setOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([greeting])
+  const { lang } = useLang()
+  const { bank, fallback } = useQaBank()
+  const [messages, setMessages] = useState<Message[]>(() => [makeGreeting(ui.chat.greeting)])
+
+  // Switching language starts the conversation over: the answers already on
+  // screen were written in the other language, so keeping them would leave a
+  // half-and-half transcript.
+  useEffect(() => {
+    setMessages([makeGreeting(ui.chat.greeting)])
+  }, [lang, ui.chat.greeting])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
   const [inviteDismissed, setInviteDismissed] = useState(false)
@@ -151,12 +194,12 @@ export function ChatBot() {
       if (qa) {
         setMessages((ms) => [
           ...ms,
-          { role: 'bot', text: qa.answer, chips: chipsFor(qa.followups), shown: 0 },
+          { role: 'bot', text: qa.answer, chips: chipsFor(bank, qa.followups), shown: 0 },
         ])
       } else {
         setMessages((ms) => [
           ...ms,
-          { role: 'bot', text: fallbackAnswer, chips: chipsFor(['contact', 'who']), shown: 0 },
+          { role: 'bot', text: fallback, chips: chipsFor(bank, ['contact', 'who']), shown: 0 },
         ])
       }
     }, 650)
@@ -166,12 +209,12 @@ export function ChatBot() {
     const text = input.trim()
     if (!text || busy) return
     setInput('')
-    respond(text, match(text))
+    respond(text, match(text, bank))
   }
 
   const tapChip = (id: string) => {
     if (busy) return
-    const qa = qaBank.find((q) => q.id === id)
+    const qa = bank.find((q) => q.id === id)
     if (qa) respond(qa.chip, qa)
   }
 
@@ -180,7 +223,7 @@ export function ChatBot() {
       {/* the whole stack rides above the keyboard, so the button never ends
           up floating in the middle of the page */}
       <div
-        className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3"
+        className="fixed bottom-5 end-5 z-40 flex flex-col items-end gap-3"
         style={band.open ? { top: band.top + band.height - 68, bottom: 'auto' } : undefined}
       >
         {!band.open && <BackToTop />}
@@ -198,18 +241,19 @@ export function ChatBot() {
                 opacity: { delay: 1.8, duration: 0.35 },
                 scale: { delay: 1.8, duration: 0.35 },
               }}
-              className={`rounded-2xl rounded-br-md border border-line bg-card px-3.5 py-1.5 text-sm font-medium shadow-lg dark:border-nline dark:bg-panel ${
+              className={`rounded-2xl rounded-ee-md border border-line bg-card px-3.5 py-1.5 text-sm font-medium shadow-lg dark:border-nline dark:bg-panel ${
                 reduced ? '' : 'float-bob'
               }`}
             >
-              Questions?
+              {ui.chat.invite}
             </motion.button>
           )}
         </AnimatePresence>
 
         <motion.button
           onClick={() => setOpen((o) => !o)}
-          aria-label="Chat with MahamatBot"
+          data-probe="chat"
+          aria-label={ui.chat.launcher}
           aria-expanded={open}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -238,16 +282,17 @@ export function ChatBot() {
                   }
                 : undefined
             }
-            className="fixed bottom-24 right-4 left-4 z-40 flex h-[65svh] max-h-[560px] flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-2xl sm:left-auto sm:w-96 dark:border-nline dark:bg-panel"
+            data-probe="chat-panel"
+            className="fixed bottom-24 end-4 start-4 z-40 flex h-[65svh] max-h-[560px] flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-2xl sm:start-auto sm:w-96 dark:border-nline dark:bg-panel"
           >
             <div className="flex items-center gap-3 border-b border-line px-4 py-3 dark:border-nline">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent font-display text-sm font-bold text-white">
                 M
               </div>
               <div>
-                <p className="font-display text-sm font-bold">MahamatBot</p>
+                <p className="font-display text-sm font-bold">{ui.chat.title}</p>
                 <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                  scripted assistant
+                  {ui.chat.subtitle}
                 </p>
               </div>
             </div>
@@ -264,8 +309,8 @@ export function ChatBot() {
                   <div
                     className={
                       m.role === 'user'
-                        ? 'ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-accent px-3.5 py-2 text-sm text-white'
-                        : 'w-fit max-w-[90%] rounded-2xl rounded-bl-md bg-paper px-3.5 py-2 text-sm leading-relaxed text-zinc-800 dark:bg-night dark:text-zinc-200'
+                        ? 'ms-auto w-fit max-w-[85%] rounded-2xl rounded-ee-md bg-accent px-3.5 py-2 text-sm text-white'
+                        : 'w-fit max-w-[90%] rounded-2xl rounded-es-md bg-paper px-3.5 py-2 text-sm leading-relaxed text-zinc-800 dark:bg-night dark:text-zinc-200'
                     }
                   >
                     {m.role === 'bot' ? m.text.slice(0, m.shown) : m.text}
@@ -273,7 +318,7 @@ export function ChatBot() {
                   {m.role === 'bot' && m.chips && m.shown >= m.text.length && (
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {m.chips.map((id) => {
-                        const qa = qaBank.find((q) => q.id === id)
+                        const qa = bank.find((q) => q.id === id)
                         if (!qa) return null
                         return (
                           <button
@@ -290,7 +335,7 @@ export function ChatBot() {
                 </div>
               ))}
               {busy && (
-                <div className="w-fit rounded-2xl rounded-bl-md bg-paper px-4 py-3 dark:bg-night">
+                <div className="w-fit rounded-2xl rounded-es-md bg-paper px-4 py-3 dark:bg-night">
                   <span className="typing-dot" />
                   <span className="typing-dot mx-1" />
                   <span className="typing-dot" />
@@ -303,14 +348,14 @@ export function ChatBot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && !e.nativeEvent.isComposing && send()}
-                placeholder="Ask about Mahamat..."
-                aria-label="Ask about Mahamat"
+                placeholder={ui.chat.placeholder}
+                aria-label={ui.chat.inputAria}
                 // 16px minimum: below that, iOS Safari zooms the page on focus
                 className="min-w-0 flex-1 rounded-full border border-line bg-transparent px-4 py-2.5 text-base outline-none placeholder:text-zinc-400 focus:border-accent dark:border-nline dark:placeholder:text-zinc-500"
               />
               <button
                 onClick={send}
-                aria-label="Send"
+                aria-label={ui.chat.send}
                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-40"
                 disabled={!input.trim() || busy}
               >

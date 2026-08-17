@@ -1,3 +1,4 @@
+import { useUi } from '../data/ui'
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Download, X } from 'lucide-react'
@@ -12,6 +13,7 @@ type Props = {
 }
 
 export function DocViewer({ title, image, file, onClose }: Props) {
+  const ui = useUi()
   const closeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export function DocViewer({ title, image, file, onClose }: Props) {
             <button
               ref={closeRef}
               onClick={onClose}
-              aria-label="Close viewer"
+              aria-label={ui.common.closeViewer}
               className="rounded-full border border-line p-2 text-zinc-600 transition-colors hover:border-accent hover:text-accentInk dark:hover:text-accentSoft dark:border-nline dark:text-zinc-300"
             >
               <X size={16} />

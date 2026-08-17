@@ -1,3 +1,4 @@
+import { useUi } from '../data/ui'
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowDown, FileText, Linkedin, Mail } from 'lucide-react'
@@ -7,6 +8,7 @@ import { DocViewer } from './DocViewer'
 import { GithubIcon } from './icons'
 
 export function Hero() {
+  const ui = useUi()
   const [cvOpen, setCvOpen] = useState(false)
   return (
     <section id="top" className="relative overflow-hidden pt-16">
@@ -26,7 +28,7 @@ export function Hero() {
           transition={{ duration: 0.5 }}
           className="font-mono text-[clamp(0.6rem,2.6vw,0.875rem)] uppercase tracking-[0.2em] text-accentInk dark:text-accentSoft sm:tracking-[0.3em] "
         >
-          Software Engineer · Kuala Lumpur
+          {ui.hero.kicker}
         </motion.p>
 
         <motion.h1
@@ -35,8 +37,10 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.08 }}
           className="mt-5 max-w-4xl font-display text-[clamp(1.45rem,8.5vw,4.5rem)] font-bold leading-[1.05]"
         >
-          Hello, I&apos;m <span className="text-accentInk dark:text-accentSoft">Mahamat</span>.
-          <br />I build web experiences that feel alive.
+          {ui.hero.greeting}
+          <span className="text-accentInk dark:text-accentSoft">{ui.hero.name}</span>.
+          <br />
+          {ui.hero.headline}
         </motion.h1>
 
         <motion.p
@@ -45,9 +49,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.16 }}
           className="mt-6 max-w-2xl text-base leading-relaxed text-zinc-600 md:text-lg dark:text-zinc-400"
         >
-          Frontend engineer with a full-stack backbone, from production React apps and reusable
-          design systems to scroll-driven 3D product films. Six months at Awesomeree shipping
-          software that real teams use every day, and available now.
+          {ui.hero.tagline}
         </motion.p>
 
         <motion.div
@@ -60,18 +62,18 @@ export function Hero() {
             href="#projects"
             className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95"
           >
-            View my work
+            {ui.hero.viewWork}
           </a>
           <button
             onClick={() => setCvOpen(true)}
             className="flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm font-semibold transition-colors hover:border-accent hover:text-accentInk dark:hover:text-accentSoft dark:border-nline"
           >
-            <FileText size={15} /> View my CV
+            <FileText size={15} /> {ui.hero.viewCv}
           </button>
           <div className="flex w-full items-center justify-center gap-4 sm:w-auto sm:justify-start">
             <a
               href="#contact"
-              aria-label="Send me a message"
+              aria-label={ui.hero.messageAria}
               className="rounded-full border border-line p-3 text-zinc-600 transition-colors hover:border-accent hover:text-accentInk dark:hover:text-accentSoft dark:border-nline dark:text-zinc-400"
             >
               <Mail size={16} />
@@ -110,14 +112,14 @@ export function Hero() {
           transition={{ delay: 1 }}
           className="mt-8 inline-flex w-fit items-center gap-2 font-mono text-xs uppercase tracking-widest text-zinc-500 sm:mt-16 dark:text-zinc-500"
         >
-          <ArrowDown size={14} className="animate-bounce" /> scroll
+          <ArrowDown size={14} className="animate-bounce" /> {ui.hero.scroll}
         </motion.a>
       </div>
 
       <AnimatePresence>
         {cvOpen && (
           <DocViewer
-            title="My CV"
+            title={ui.hero.cvTitle}
             image="/img/cv-preview.jpg"
             file={profile.cvPath}
             onClose={() => setCvOpen(false)}
