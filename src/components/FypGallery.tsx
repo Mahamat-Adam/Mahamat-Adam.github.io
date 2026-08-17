@@ -103,7 +103,7 @@ function Lightbox({
         >
           <Prev size={22} />
         </button>
-        <p className="min-w-16 text-center font-mono text-xs text-white/70">
+        <p dir="ltr" className="min-w-16 text-center font-mono text-xs text-white/70">
           {state.index + 1} / {state.list.length}
         </p>
         <button
@@ -150,7 +150,10 @@ function Lightbox({
       >
         <Next size={20} />
       </button>
-      <p className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 font-mono text-xs text-white/70 sm:block">
+      <p
+        dir="ltr"
+        className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 font-mono text-xs text-white/70 sm:block"
+      >
         {state.index + 1} / {state.list.length}
       </p>
     </motion.div>

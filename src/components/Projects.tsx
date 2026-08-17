@@ -143,7 +143,10 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               >
                 <Next size={24} />
               </button>
-              <span className="absolute bottom-3 end-4 hidden rounded-full bg-black/50 px-2.5 py-1 font-mono text-[11px] text-white backdrop-blur sm:block">
+              <span
+                dir="ltr"
+                className="absolute bottom-3 end-4 hidden rounded-full bg-black/50 px-2.5 py-1 font-mono text-[11px] text-white backdrop-blur sm:block"
+              >
                 {idx + 1} / {gallery.length}
               </span>
             </>
@@ -166,7 +169,10 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
             >
               <Prev size={20} />
             </button>
-            <span className="min-w-14 text-center font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+            <span
+              dir="ltr"
+              className="min-w-14 text-center font-mono text-[11px] text-zinc-500 dark:text-zinc-400"
+            >
               {idx + 1} / {gallery.length}
             </span>
             <button
