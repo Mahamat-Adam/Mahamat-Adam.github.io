@@ -75,12 +75,15 @@ export function ScrollStrip({ children, className = '' }: Props) {
     return () => el.removeEventListener('wheel', onWheel)
   }, [])
 
-  // The scroller is pinned LTR: screenshots carry no reading order, and under RTL
-  // scrollLeft counts down from zero, which would run the progress bar below
-  // backwards while the thumb is still positioned from the physical left.
+  // dir is pinned on the WRAPPER, not just the scroller. Screenshots carry no
+  // reading order, and the indicator below is positioned from the physical left:
+  // its thumb sets both a width and a margin-left while margin-right stays 0, which
+  // is over-constrained, and CSS resolves that under RTL by ignoring margin-LEFT.
+  // With only the scroller pinned, the thumb sat against the right edge and never
+  // moved, so the bar looked frozen while the strip scrolled perfectly well.
   return (
-    <div>
-      <div ref={ref} dir="ltr" className={`strip-scroll ${className}`}>
+    <div dir="ltr">
+      <div ref={ref} className={`strip-scroll ${className}`}>
         {children}
       </div>
       {bar.needed && (
