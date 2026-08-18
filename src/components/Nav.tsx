@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Menu, Moon, Sun, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTheme } from '../hooks/useTheme'
+import { useLang } from '../lib/lang'
 import { LanguageMenu } from './LanguageMenu'
 
 const links = [
@@ -17,7 +18,17 @@ const links = [
 export function Nav() {
   const ui = useUi()
   const { dark, toggle } = useTheme()
+  const { lang } = useLang()
   const [open, setOpen] = useState(false)
+
+  // Spanish labels are long enough that the full bar does not fit a 768px tablet:
+  // it wrapped onto two lines, which reads as broken. Spanish alone keeps the menu
+  // button one breakpoint longer. English, Arabic and French all fit at md, French
+  // because its bar label is the abbreviation PFE, as English uses FYP.
+  const late = lang === 'es'
+  const bar = late ? 'hidden items-center gap-4 lg:flex lg:gap-7' : 'hidden items-center gap-4 md:flex lg:gap-7'
+  const cluster = late ? 'flex items-center gap-3 lg:hidden' : 'flex items-center gap-3 md:hidden'
+  const sheet = late ? 'lg:hidden' : 'md:hidden'
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-line/60 bg-paper/80 backdrop-blur-md dark:border-nline/60 dark:bg-night/80">
@@ -28,12 +39,13 @@ export function Nav() {
           Mahamat<span className="text-accentInk dark:text-accentSoft">.</span>
         </a>
 
-        <div className="hidden items-center gap-7 md:flex">
+        {/* Tighter at the first breakpoint, full spacing again at lg. */}
+        <div className={bar}>
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-zinc-600 transition-colors hover:text-ink dark:text-zinc-400 dark:hover:text-white"
+              className="whitespace-nowrap text-sm text-zinc-600 transition-colors hover:text-ink dark:text-zinc-400 dark:hover:text-white"
             >
               {ui.nav[l.key]}
             </a>
@@ -48,7 +60,7 @@ export function Nav() {
           <LanguageMenu />
         </div>
 
-        <div className="flex items-center gap-3 md:hidden">
+        <div className={cluster}>
           <button
             onClick={toggle}
             aria-label={ui.nav.toggleTheme}
@@ -73,7 +85,7 @@ export function Nav() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-line bg-paper md:hidden dark:border-nline dark:bg-night"
+            className={`overflow-hidden border-t border-line bg-paper dark:border-nline dark:bg-night ${sheet}`}
           >
             <div className="flex flex-col px-5 py-3">
               {links.map((l) => (

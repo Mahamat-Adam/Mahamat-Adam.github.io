@@ -1,7 +1,8 @@
 import { useUi } from '../data/ui'
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check, Globe } from 'lucide-react'
+import { Check, ChevronDown } from 'lucide-react'
+import { Flag } from './Flag'
 import { languages, useLang } from '../lib/lang'
 
 // Built as a real dropdown rather than a <select>: a native picker's open list is
@@ -37,10 +38,20 @@ export function LanguageMenu() {
         aria-label={ui.nav.changeLanguage}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="flex items-center gap-1.5 rounded-full border border-line p-2 text-zinc-600 transition-colors hover:text-ink dark:border-nline dark:text-zinc-400 dark:hover:text-white"
+        className="flex items-center gap-2 rounded-full border border-line py-2 pe-2 ps-2.5 text-zinc-600 transition-colors hover:text-ink dark:border-nline dark:text-zinc-400 dark:hover:text-white"
       >
-        <Globe size={16} />
-        <span className="font-mono text-[11px] uppercase">{current.code}</span>
+        <Flag code={current.code} />
+        {/* Named, not abbreviated: "EN" tells a French visitor nothing about
+            whether their language is here, and the name is the part that has to
+            survive if the flag ever does not draw. */}
+        <span lang={current.code} className="text-[13px] leading-none">
+          {current.native}
+        </span>
+        <ChevronDown
+          size={14}
+          aria-hidden="true"
+          className={`shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+        />
       </button>
 
       <AnimatePresence>
@@ -65,7 +76,10 @@ export function LanguageMenu() {
                   }}
                   className="flex w-full items-center justify-between gap-3 px-3.5 py-2.5 text-start text-sm text-zinc-700 transition-colors hover:bg-paper dark:text-zinc-300 dark:hover:bg-night"
                 >
-                  <span lang={l.code}>{l.native}</span>
+                  <span className="flex items-center gap-2.5">
+                    <Flag code={l.code} />
+                    <span lang={l.code}>{l.native}</span>
+                  </span>
                   {l.code === lang && (
                     <Check size={14} className="shrink-0 text-accentInk dark:text-accentSoft" />
                   )}

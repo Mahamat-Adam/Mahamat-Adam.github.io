@@ -30,6 +30,14 @@ const stemWord = (w: string) => {
 const normalize = (s: string) =>
   s
     .toLowerCase()
+    // Fold accents, so "developpeur" finds "développeur" and "espanol" finds
+    // "español": visitors on an English keyboard type the bare letters, and
+    // French and Spanish writers drop accents in a hurry either way. This runs
+    // BEFORE the punctuation pass on purpose, because a decomposed accent is a
+    // combining mark rather than a letter, and that pass would turn it into a
+    // space and split the word in half.
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
     // Keep letters of ANY script plus digits. The previous version stripped
     // everything outside a-z0-9, which reduced an Arabic question to an empty
     // string, so it could never match a single keyword.

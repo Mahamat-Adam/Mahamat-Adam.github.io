@@ -47,7 +47,8 @@
 
           // Resolved here, not in React: applying dir after first paint would
           // render the whole page one way and then mirror it.
-          var l = localStorage.getItem('lang') === 'ar' ? 'ar' : 'en'
+          var stored = localStorage.getItem('lang')
+          var l = ['ar', 'fr', 'es'].indexOf(stored) >= 0 ? stored : 'en'
           document.documentElement.lang = l
           document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr'
         } catch (e) {

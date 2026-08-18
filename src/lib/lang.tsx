@@ -6,6 +6,8 @@ import type { ReactNode } from 'react'
 export const languages = [
   { code: 'en', name: 'English', native: 'English', dir: 'ltr' },
   { code: 'ar', name: 'Arabic', native: 'العربية', dir: 'rtl' },
+  { code: 'fr', name: 'French', native: 'Français', dir: 'ltr' },
+  { code: 'es', name: 'Spanish', native: 'Español', dir: 'ltr' },
 ] as const
 
 export type LangCode = (typeof languages)[number]['code']
