@@ -1,5 +1,5 @@
 import { useUi } from '../data/ui'
-import { Download, Linkedin, MapPin } from 'lucide-react'
+import { Download, Globe, Linkedin, MapPin } from 'lucide-react'
 import { useContent } from '../data/content'
 import { profile } from '../data/profile'
 import { openExternal } from '../lib/openExternal'
@@ -17,6 +17,15 @@ export function Contact() {
         <Reveal>
           <p className="text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
             {ui.contact.intro}
+          </p>
+        </Reveal>
+
+        {/* Where he is looking, stated before the form rather than left to the
+            assistant: it is the first thing a recruiter filters on. */}
+        <Reveal delay={0.05}>
+          <p className="mx-auto mt-5 flex max-w-xl items-center justify-center gap-2 rounded-2xl border border-line bg-card/60 px-4 py-3 text-sm leading-relaxed text-zinc-700 dark:border-nline dark:bg-panel/60 dark:text-zinc-300">
+            <Globe size={15} className="shrink-0 text-accentInk dark:text-accentSoft" />
+            <span>{ui.contact.openTo}</span>
           </p>
         </Reveal>
 

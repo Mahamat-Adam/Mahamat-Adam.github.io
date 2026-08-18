@@ -1,3 +1,4 @@
+import { Code2 } from 'lucide-react'
 import { useContent } from '../data/content'
 import { useUi } from '../data/ui'
 import { FypGallery } from './FypGallery'
@@ -66,6 +67,23 @@ export function Fyp() {
       </div>
 
       <FypGallery />
+
+      {/* The repository is not public yet, so the invitation stands in for it:
+          better to offer a conversation than to leave the question unanswered. */}
+      <Reveal className="mt-12">
+        <div className="mx-auto flex max-w-2xl flex-col items-center gap-3 rounded-2xl border border-line bg-card/60 px-6 py-6 text-center dark:border-nline dark:bg-panel/60 sm:flex-row sm:text-start">
+          <Code2 size={20} className="shrink-0 text-accentInk dark:text-accentSoft" />
+          <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            {ui.fyp.codeNote}
+          </p>
+          <a
+            href="#contact"
+            className="shrink-0 whitespace-nowrap rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          >
+            {ui.fyp.codeCta}
+          </a>
+        </div>
+      </Reveal>
 
       <Reveal className="mt-14 space-y-3">
         <PhotoMarquee images={rowA} heightClass="h-40 md:h-52" />

@@ -167,13 +167,13 @@ export const qaFr: { bank: QaOverlay; fallback: string } = {
       chip: 'Où habite-t-il ?',
       keywords: ['ou habite', 'ou est il', 'malaisie', 'kuala lumpur', 'teletravail', 'demenager'],
       answer:
-        "Il vit à Kuala Lumpur, en Malaisie. Pour toute question de mobilité ou de travail à distance, mieux vaut le lui demander directement : la section Contact comporte un formulaire qui lui parvient.",
+        "Il vit à Kuala Lumpur, en Malaisie, et cherche un poste en Arabie saoudite, aux Émirats arabes unis, en Europe ou aux États-Unis. Il est prêt à s'installer n'importe où : le pays n'est donc pas un obstacle. La section Contact comporte un formulaire qui lui parvient.",
     },
     availability: {
       chip: 'Est-il disponible ?',
       keywords: ['disponible', 'recrutement', 'embauche', 'offre', 'poste a pourvoir'],
       answer:
-        "Oui, il est ouvert aux postes en génie logiciel, front-end et ingénierie de solutions. Le plus rapide est le formulaire de contact ou LinkedIn, tous deux dans la section Contact.",
+        "Oui, il est ouvert aux postes en génie logiciel, front-end et ingénierie de solutions, en Arabie saoudite, aux Émirats arabes unis, en Europe et aux États-Unis, et il est prêt à s'installer n'importe où. Le plus rapide est le formulaire de contact ou LinkedIn, tous deux dans la section Contact.",
     },
     cv: {
       chip: 'Puis-je voir son CV ?',

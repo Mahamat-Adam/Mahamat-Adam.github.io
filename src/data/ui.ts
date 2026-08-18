@@ -80,6 +80,9 @@ const strings = {
       panelAria: (n: number) => `View panel screenshot ${n}`,
       panelAlt: (n: number) => `Web panel screenshot ${n}`,
       systemAlt: (n: number) => `System screenshot ${n}`,
+      codeNote:
+        "The source code is not public yet. If you want to know more about how any of it was built, message me and I will gladly walk you through it.",
+      codeCta: 'Ask me about it',
       facts: {
         grade: 'final grade',
         tests: 'test cases passed',
@@ -102,6 +105,8 @@ const strings = {
       title: "Let's talk",
       intro:
         "Whether it's a role, a project or just a good conversation about the web, my inbox is open.",
+      openTo:
+        'Open to roles in Saudi Arabia, the UAE, Europe and the USA, and ready to relocate anywhere.',
     },
     form: {
       name: 'Name',
@@ -209,6 +214,9 @@ const strings = {
       panelAria: (n: number) => `عرض صورة الواجهة ${n}`,
       panelAlt: (n: number) => `صورة من واجهة الويب ${n}`,
       systemAlt: (n: number) => `صورة من النظام ${n}`,
+      codeNote:
+        'الكود المصدري لم ينشر بعد. وإن أردت معرفة المزيد عن طريقة بناء أي جزء منه، راسلني وسأشرحه لك بكل سرور.',
+      codeCta: 'راسلني بشأنه',
       facts: {
         grade: 'التقدير النهائي',
         tests: 'حالة اختبار اجتيزت',
@@ -234,6 +242,8 @@ const strings = {
       title: 'لنتحدث',
       intro:
         'سواء كانت وظيفة أو مشروعا أو مجرد حديث ممتع عن الويب، بابي مفتوح ولن تنتظر ردا طويلا.',
+      openTo:
+        'أبحث عن فرص عمل في السعودية والإمارات وأوروبا والولايات المتحدة، ومستعد للانتقال إلى أي مكان.',
     },
     form: {
       name: 'الاسم',
@@ -342,6 +352,9 @@ const strings = {
       panelAria: (n: number) => `Voir la capture ${n} de l'interface`,
       panelAlt: (n: number) => `Capture ${n} de l'interface web`,
       systemAlt: (n: number) => `Capture ${n} du système`,
+      codeNote:
+        "Le code source n'est pas encore public. Si vous voulez en savoir plus sur la façon dont tout cela a été construit, écrivez-moi et je vous expliquerai volontiers.",
+      codeCta: 'Posez-moi la question',
       facts: {
         grade: 'note finale',
         tests: 'cas de test réussis',
@@ -367,6 +380,8 @@ const strings = {
       title: 'Discutons',
       intro:
         "Un poste, un projet, ou simplement une bonne conversation sur le web : ma porte est ouverte et vous n'attendrez pas longtemps une réponse.",
+      openTo:
+        "Ouvert à des postes en Arabie saoudite, aux Émirats arabes unis, en Europe et aux États-Unis, et prêt à m'installer n'importe où.",
     },
     form: {
       name: 'Nom',
@@ -473,6 +488,9 @@ const strings = {
       panelAria: (n: number) => `Ver la captura ${n} del panel`,
       panelAlt: (n: number) => `Captura ${n} del panel web`,
       systemAlt: (n: number) => `Captura ${n} del sistema`,
+      codeNote:
+        'El código fuente todavía no es público. Si quieres saber más sobre cómo está construido, escríbeme y te lo cuento encantado.',
+      codeCta: 'Pregúntame por él',
       facts: {
         grade: 'nota final',
         tests: 'casos de prueba superados',
@@ -498,6 +516,8 @@ const strings = {
       title: 'Hablemos',
       intro:
         'Un puesto, un proyecto o simplemente una buena conversación sobre la web: mi puerta está abierta y no tardaré en responder.',
+      openTo:
+        'Abierto a puestos en Arabia Saudí, los Emiratos Árabes Unidos, Europa y Estados Unidos, y dispuesto a mudarme a cualquier país.',
     },
     form: {
       name: 'Nombre',

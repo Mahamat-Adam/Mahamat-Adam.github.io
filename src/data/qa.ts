@@ -373,7 +373,7 @@ export const qaBank: QA[] = [
       'remote',
     ],
     answer:
-      "He's based in Kuala Lumpur, Malaysia. For questions about relocation or remote work, best to ask him directly; the Contact section has a form that reaches him.",
+      "He's based in Kuala Lumpur, Malaysia, and is looking at roles in Saudi Arabia, the UAE, Europe and the USA. He's ready to relocate anywhere, so the country is not the obstacle; the Contact section has a form that reaches him.",
     followups: ['contact', 'availability', 'who'],
   },
   {
@@ -393,7 +393,7 @@ export const qaBank: QA[] = [
       'job offer',
     ],
     answer:
-      "Yes, he's open to software engineering, frontend and solution engineering opportunities. The fastest way to start a conversation is the contact form or LinkedIn, both in the Contact section.",
+      "Yes, he's open to software engineering, frontend and solution engineering opportunities, in Saudi Arabia, the UAE, Europe and the USA, and he's ready to relocate anywhere. The fastest way to start a conversation is the contact form or LinkedIn, both in the Contact section.",
     followups: ['contact', 'cv', 'internship'],
   },
   {

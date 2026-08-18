@@ -166,13 +166,13 @@ export const qaEs: { bank: QaOverlay; fallback: string } = {
       chip: '¿Dónde vive?',
       keywords: ['donde vive', 'donde esta', 'malasia', 'kuala lumpur', 'teletrabajo', 'mudarse'],
       answer:
-        'Vive en Kuala Lumpur, Malasia. Para cualquier tema de traslado o trabajo en remoto, lo mejor es preguntárselo a él: en la sección de Contacto hay un formulario que le llega directamente.',
+        'Vive en Kuala Lumpur, Malasia, y busca trabajo en Arabia Saudí, los Emiratos Árabes Unidos, Europa y Estados Unidos. Está dispuesto a mudarse a cualquier país, así que el destino no es el problema: en la sección de Contacto hay un formulario que le llega directamente.',
     },
     availability: {
       chip: '¿Está disponible?',
       keywords: ['disponible', 'contratar', 'vacante', 'oferta', 'busca trabajo'],
       answer:
-        'Sí, está abierto a puestos de ingeniería de software, front-end e ingeniería de soluciones. Lo más rápido es el formulario de contacto o LinkedIn, ambos en la sección de Contacto.',
+        'Sí, está abierto a puestos de ingeniería de software, front-end e ingeniería de soluciones, en Arabia Saudí, los Emiratos Árabes Unidos, Europa y Estados Unidos, y está dispuesto a mudarse a cualquier país. Lo más rápido es el formulario de contacto o LinkedIn, ambos en la sección de Contacto.',
     },
     cv: {
       chip: '¿Puedo ver su CV?',
