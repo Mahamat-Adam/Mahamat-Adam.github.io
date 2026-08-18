@@ -289,8 +289,14 @@ export function Projects() {
 
   return (
     <Section id="projects" kicker={ui.projects.kicker} title={ui.projects.title}>
-      <p className="-mt-6 mb-10 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="-mt-6 mb-4 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400">
         {ui.projects.intro}
+      </p>
+      {/* Whose work this is. Once, above the grid: every card below has the same
+          answer, so putting it on each of them would be seven copies of a paragraph
+          nobody would read twice. */}
+      <p className="mb-10 max-w-2xl rounded-xl border border-line bg-card/60 px-4 py-3 text-sm leading-relaxed text-zinc-600 dark:border-nline dark:bg-panel/50 dark:text-zinc-400">
+        {ui.projects.notice}
       </p>
       <div className="grid min-w-0 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((p, i) => {
