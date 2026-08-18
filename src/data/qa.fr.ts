@@ -161,7 +161,7 @@ export const qaFr: { bank: QaOverlay; fallback: string } = {
     languages: {
       chip: 'Quelles langues parle-t-il ?',
       keywords: ['langues', 'parle', 'anglais', 'arabe', 'francais'],
-      answer: "L'anglais et l'arabe, tous les deux couramment.",
+      answer: "L'arabe est sa langue maternelle, et il parle couramment l'anglais.",
     },
     location: {
       chip: 'Où habite-t-il ?',

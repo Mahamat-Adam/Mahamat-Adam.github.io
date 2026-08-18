@@ -352,7 +352,7 @@ export const qaBank: QA[] = [
     id: 'languages',
     chip: 'What languages does he speak?',
     keywords: ['speak', 'speaks', 'spoken', 'language', 'english', 'arabic'],
-    answer: 'English and Arabic, both fluent.',
+    answer: 'Arabic is his native language, and he speaks English fluently.',
     followups: ['who', 'location', 'contact'],
   },
   {

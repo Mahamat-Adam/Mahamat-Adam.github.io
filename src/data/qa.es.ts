@@ -160,7 +160,7 @@ export const qaEs: { bank: QaOverlay; fallback: string } = {
     languages: {
       chip: '¿Qué idiomas habla?',
       keywords: ['idiomas', 'habla', 'ingles', 'arabe', 'espanol'],
-      answer: 'Inglés y árabe, ambos con fluidez.',
+      answer: 'El árabe es su lengua materna, y habla inglés con fluidez.',
     },
     location: {
       chip: '¿Dónde vive?',

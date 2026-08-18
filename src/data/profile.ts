@@ -169,7 +169,7 @@ export const certifications = [
   { name: 'CCNAv7: Introduction to Networks', issuer: 'Cisco Networking Academy' },
 ]
 
-export const spokenLanguages = ['English (fluent)', 'Arabic (fluent)']
+export const spokenLanguages = ['English (fluent)', 'Arabic (native)']
 
 export const fypIntro = [
   `My final year project solved a real problem for a real client: Sahel Retail Ltd, a
