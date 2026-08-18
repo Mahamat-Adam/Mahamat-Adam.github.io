@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react'
 import type { LangCode } from '../lib/lang'
+import { saudiArabia } from './saudiFlag'
 
 /**
  * Inline SVG rather than emoji. Windows ships no flag glyphs, so an emoji flag
@@ -7,8 +8,11 @@ import type { LangCode } from '../lib/lang'
  * most of them, would see "GB" and "FR" as plain text where the flags should be.
  * Verified in Chrome on this machine before choosing this route.
  *
- * Drawn at a 3:2 ratio and kept deliberately plain: at 16px nothing finer than a
- * band or a stripe survives, so detail would only turn to mush.
+ * Drawn at a 3:2 ratio. The ones made of bands and crosses are drawn here and
+ * kept plain, since at 18px nothing finer than a band survives. Saudi Arabia is
+ * not one of those: its shahada and sword are specific shapes, so it brings the
+ * real artwork rather than an impression of it, and lives in its own file
+ * because that artwork is a hundred lines long.
  *
  * Being inline, these cannot fail to load the way an image file can. The one
  * remaining gap is a code with no drawing, which returns null: the flag is always
@@ -26,22 +30,7 @@ const flags: Record<string, ReactElement> = {
       <path d="M15 0v20M0 10h30" stroke="#C8102E" strokeWidth="4" />
     </>
   ),
-  // Saudi Arabia. The shahada is real calligraphy and no glyph of it survives at
-  // 18px, so it is suggested here rather than spelled out: a connecting baseline
-  // with ascenders, which is what the eye reads as Arabic script at this size.
-  // The sword sits below it with the point to the hoist, as on the flag.
-  ar: (
-    <>
-      <rect width="30" height="20" fill="#006C35" />
-      <g fill="none" stroke="#fff" strokeWidth="1.05" strokeLinecap="round">
-        <path d="M5 8.9c1.7.9 3.4.9 5.1 0s3.4-.9 5.1 0 3.4.9 5.1 0 3.4-.9 4.7 0" />
-        <path d="M6.6 5.8v2.9M10.6 5.4v3.3M15 5.9v2.7M18.9 5.4v3.3M23.2 5.8v2.9" />
-      </g>
-      <path d="M4.4 13.6 8 12.3h13.2v2.6H8z" fill="#fff" />
-      <rect x="21.8" y="11.8" width="1.1" height="3.6" rx="0.3" fill="#fff" />
-      <rect x="23.3" y="13" width="2.6" height="1.2" rx="0.6" fill="#fff" />
-    </>
-  ),
+  ar: saudiArabia,
   fr: (
     <>
       <rect width="30" height="20" fill="#fff" />
