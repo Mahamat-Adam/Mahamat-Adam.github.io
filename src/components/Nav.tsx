@@ -29,14 +29,21 @@ export function Nav() {
   const bar = late ? 'hidden items-center gap-4 lg:flex lg:gap-7' : 'hidden items-center gap-4 md:flex lg:gap-7'
   const sheet = late ? 'lg:hidden' : 'md:hidden'
 
-  // Arabic mirrors the header, which parks the menu button in the left corner
-  // while the sheet it opens still reads down the right. Two corners for one
-  // control. So while that button exists, hold the row in visual LTR order and
-  // it sits in the corner its own sheet starts from, exactly where English puts
-  // it. The wide bar has no button, so above the breakpoint the mirror stands.
-  const flip = rtl ? ' flex-row-reverse md:flex-row' : ''
+  // Arabic mirrors the header, which sends the wordmark to the right and the
+  // controls to the left, and on phones leaves the menu button in one corner
+  // while the sheet it opens reads down the other. The row is held in visual
+  // LTR order instead, so the wordmark, the theme toggle, the language pill and
+  // the menu button each keep the corner English gives them, at every width:
+  // mirroring only the compact header would have made the wordmark jump sides
+  // as the layout crossed 768px.
+  //
+  // The row only. The links are grouped so they are not caught by the reversal
+  // and still read right to left, and the dropdown under the language pill hangs
+  // from whichever edge is the outer one for the row it sits in.
+  const flip = rtl ? ' flex-row-reverse' : ''
   const clusterBase = late ? 'flex items-center gap-3 lg:hidden' : 'flex items-center gap-3 md:hidden'
-  const cluster = rtl ? clusterBase + ' flex-row-reverse' : clusterBase
+  const cluster = clusterBase + flip
+  const anchor = rtl ? 'start' : 'end'
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-line/60 bg-paper/80 backdrop-blur-md dark:border-nline/60 dark:bg-night/80">
@@ -48,16 +55,18 @@ export function Nav() {
         </a>
 
         {/* Tighter at the first breakpoint, full spacing again at lg. */}
-        <div className={bar}>
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="whitespace-nowrap text-sm text-zinc-600 transition-colors hover:text-ink dark:text-zinc-400 dark:hover:text-white"
-            >
-              {ui.nav[l.key]}
-            </a>
-          ))}
+        <div className={bar + flip}>
+          <div className="flex items-center gap-4 lg:gap-7">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="whitespace-nowrap text-sm text-zinc-600 transition-colors hover:text-ink dark:text-zinc-400 dark:hover:text-white"
+              >
+                {ui.nav[l.key]}
+              </a>
+            ))}
+          </div>
           <button
             onClick={toggle}
             aria-label={ui.nav.toggleTheme}
@@ -65,7 +74,7 @@ export function Nav() {
           >
             {dark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <LanguageMenu />
+          <LanguageMenu anchor={anchor} />
         </div>
 
         <div className={cluster}>
@@ -76,7 +85,7 @@ export function Nav() {
           >
             {dark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <LanguageMenu anchor={rtl ? 'start' : 'end'} />
+          <LanguageMenu anchor={anchor} />
           <button
             onClick={() => setOpen((o) => !o)}
             aria-label={ui.nav.menu}
