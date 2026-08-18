@@ -18,7 +18,7 @@ const links = [
 export function Nav() {
   const ui = useUi()
   const { dark, toggle } = useTheme()
-  const { lang } = useLang()
+  const { lang, rtl } = useLang()
   const [open, setOpen] = useState(false)
 
   // Spanish labels are long enough that the full bar does not fit a 768px tablet:
@@ -27,12 +27,20 @@ export function Nav() {
   // because its bar label is the abbreviation PFE, as English uses FYP.
   const late = lang === 'es'
   const bar = late ? 'hidden items-center gap-4 lg:flex lg:gap-7' : 'hidden items-center gap-4 md:flex lg:gap-7'
-  const cluster = late ? 'flex items-center gap-3 lg:hidden' : 'flex items-center gap-3 md:hidden'
   const sheet = late ? 'lg:hidden' : 'md:hidden'
+
+  // Arabic mirrors the header, which parks the menu button in the left corner
+  // while the sheet it opens still reads down the right. Two corners for one
+  // control. So while that button exists, hold the row in visual LTR order and
+  // it sits in the corner its own sheet starts from, exactly where English puts
+  // it. The wide bar has no button, so above the breakpoint the mirror stands.
+  const flip = rtl ? ' flex-row-reverse md:flex-row' : ''
+  const clusterBase = late ? 'flex items-center gap-3 lg:hidden' : 'flex items-center gap-3 md:hidden'
+  const cluster = rtl ? clusterBase + ' flex-row-reverse' : clusterBase
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-line/60 bg-paper/80 backdrop-blur-md dark:border-nline/60 dark:bg-night/80">
-      <nav className="mx-auto flex h-16 max-w-wrap items-center justify-between px-5 md:px-8">
+      <nav className={`mx-auto flex h-16 max-w-wrap items-center justify-between px-5 md:px-8${flip}`}>
         {/* A Latin wordmark inside an RTL page: without dir the trailing full stop
             is treated as neutral and jumps to the front, reading ".Mahamat" */}
         <a href="#top" dir="ltr" className="font-display text-lg font-bold tracking-tight">
@@ -68,7 +76,7 @@ export function Nav() {
           >
             {dark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <LanguageMenu />
+          <LanguageMenu anchor={rtl ? 'start' : 'end'} />
           <button
             onClick={() => setOpen((o) => !o)}
             aria-label={ui.nav.menu}

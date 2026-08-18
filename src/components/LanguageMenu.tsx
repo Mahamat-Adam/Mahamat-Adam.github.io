@@ -8,7 +8,7 @@ import { languages, useLang } from '../lib/lang'
 // Built as a real dropdown rather than a <select>: a native picker's open list is
 // drawn by the OS, so it cannot take the site's colours, and it flashes light on a
 // dark page. Same reason the contact topics became pills.
-export function LanguageMenu() {
+export function LanguageMenu({ anchor = 'end' }: { anchor?: 'start' | 'end' }) {
   const ui = useUi()
   const { lang, setLang } = useLang()
   const [open, setOpen] = useState(false)
@@ -62,8 +62,11 @@ export function LanguageMenu() {
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.14 }}
             role="menu"
-            // end-anchored so it stays inside the viewport in both directions
-            className="absolute end-0 top-full z-50 mt-2 min-w-40 overflow-hidden rounded-xl border border-line bg-card py-1 shadow-lg dark:border-nline dark:bg-panel"
+            // Hung from the row's outer edge so it stays inside the viewport in
+            // both directions. That is the logical end in a normal row, but the
+            // Arabic compact header is held in LTR order, so there the outer edge
+            // is the logical start.
+            className={`absolute ${anchor === 'start' ? 'start-0' : 'end-0'} top-full z-50 mt-2 min-w-40 overflow-hidden rounded-xl border border-line bg-card py-1 shadow-lg dark:border-nline dark:bg-panel`}
           >
             {languages.map((l) => (
               <li key={l.code}>
