@@ -59,7 +59,7 @@ const strings = {
       // of them has the same answer. The final year project has its own section
       // below and is deliberately excluded here.
       notice:
-        'Everything in this section was built for Awesomeree Sdn. Bhd. during my internship there, and the company owns the work outright. My NDA means I cannot show source code or any excerpt of it: the two sites that are publicly live are linked, and the rest are shown as screenshots. I wrote this code but claim no ownership of it. It is here to show hands-on work. My final year project, further down, is my own.',
+        "Everything in this section was built for Awesomeree Sdn. Bhd. during my internship there, and the company owns the work outright. My NDA means I cannot show source code or any excerpt of it: the two sites that are publicly live are linked, and the rest are shown as screenshots. I wrote this code but claim no ownership of it. It is here to show hands-on work. My final year project, further down, is my own. So is Job Radar, the last card here: I built it on my own time, it is not Awesomeree's work, and its source is public.",
       shotAlt: (title: string) => `${title} screenshot`,
       shotAltLarge: (title: string) => `${title} screenshot, enlarged`,
       enlarge: 'Enlarge screenshot',
@@ -68,6 +68,7 @@ const strings = {
       prev: 'Previous view',
       next: 'Next view',
       tapToEnlarge: 'tap to enlarge',
+      viewSource: 'View the source',
     },
     fyp: {
       kicker: 'Final Year Project',
@@ -198,13 +199,14 @@ const strings = {
       // in a full stop followed by Arabic is the shape the bidi guard rejects, and the
       // company is written in full on the experience card either way.
       notice:
-        'كل ما في هذا القسم أنجزته لشركة Awesomeree Sdn Bhd أثناء تدريبي فيها، وهي تملك هذا العمل ملكية كاملة. ويمنعني اتفاق عدم الإفصاح من عرض الكود المصدري أو أي مقتطف منه، فالموقعان المتاحان للعموم مرفقان برابطيهما، وما عداهما معروض بالصور وحدها. كتبت هذا الكود ولا أدعي ملكيته، وإنما أعرضه شاهدا على عمل باشرته بيدي. أما مشروع تخرجي، وهو أسفل الصفحة، فهو ملكي وحدي.',
+        'كل ما في هذا القسم أنجزته لشركة Awesomeree Sdn Bhd أثناء تدريبي فيها، وهي تملك هذا العمل ملكية كاملة. ويمنعني اتفاق عدم الإفصاح من عرض الكود المصدري أو أي مقتطف منه، فالموقعان المتاحان للعموم مرفقان برابطيهما، وما عداهما معروض بالصور وحدها. كتبت هذا الكود ولا أدعي ملكيته، وإنما أعرضه شاهدا على عمل باشرته بيدي. أما مشروع تخرجي، وهو أسفل الصفحة، فهو ملكي وحدي. وكذلك Job Radar، وهو آخر بطاقة هنا: بنيته في وقتي الخاص، ولا صلة له بـ Awesomeree، وكوده المصدري متاح للجميع.',
       enlarge: 'تكبير الصورة',
       close: 'إغلاق',
       closeEnlarged: 'إغلاق العرض المكبر',
       prev: 'العرض السابق',
       next: 'العرض التالي',
       tapToEnlarge: 'اضغط للتكبير',
+      viewSource: 'تصفح الكود المصدري',
       shotAlt: (title: string) => `صورة من ${title}`,
       shotAltLarge: (title: string) => `صورة مكبرة من ${title}`,
     },
@@ -338,7 +340,7 @@ const strings = {
       intro:
         "Des sites réellement en ligne et des réalisations 3D interactives. Cliquez sur une carte pour lire l'histoire complète.",
       notice:
-        "Tout ce que contient cette section a été réalisé pour Awesomeree Sdn. Bhd. pendant mon stage dans l'entreprise, qui en détient l'entière propriété. Mon accord de confidentialité m'interdit de montrer le code source ou le moindre extrait : les deux sites publiquement en ligne sont liés, les autres sont présentés en captures d'écran. J'ai écrit ce code mais n'en revendique aucune propriété. Il est ici pour montrer un travail concret. Mon projet de fin d'études, plus bas, est le mien.",
+        "Tout ce que contient cette section a été réalisé pour Awesomeree Sdn. Bhd. pendant mon stage dans l'entreprise, qui en détient l'entière propriété. Mon accord de confidentialité m'interdit de montrer le code source ou le moindre extrait : les deux sites publiquement en ligne sont liés, les autres sont présentés en captures d'écran. J'ai écrit ce code mais n'en revendique aucune propriété. Il est ici pour montrer un travail concret. Mon projet de fin d'études, plus bas, est le mien. Job Radar aussi, la dernière carte ici : je l'ai construit sur mon temps libre, il n'appartient pas à Awesomeree, et son code source est public.",
       shotAlt: (title: string) => `Capture de ${title}`,
       shotAltLarge: (title: string) => `Capture agrandie de ${title}`,
       enlarge: 'Agrandir la capture',
@@ -347,6 +349,7 @@ const strings = {
       prev: 'Vue précédente',
       next: 'Vue suivante',
       tapToEnlarge: 'cliquez pour agrandir',
+      viewSource: 'Voir le code source',
     },
     fyp: {
       kicker: "Projet de fin d'études",
@@ -477,7 +480,7 @@ const strings = {
       visitSite: 'Visitar el sitio',
       intro: 'Sitios que están realmente en línea y trabajos 3D interactivos. Pulsa en cualquier tarjeta para leer la historia completa.',
       notice:
-        'Todo lo que hay en esta sección lo construí para Awesomeree Sdn. Bhd. durante mis prácticas allí, y la empresa tiene su propiedad íntegra. Mi acuerdo de confidencialidad me impide mostrar el código fuente o cualquier fragmento de él: los dos sitios que están públicamente en línea van enlazados y el resto se muestra en capturas. Escribí este código pero no reclamo su propiedad. Está aquí para mostrar trabajo real. Mi proyecto de fin de carrera, más abajo, sí es mío.',
+        'Todo lo que hay en esta sección lo construí para Awesomeree Sdn. Bhd. durante mis prácticas allí, y la empresa tiene su propiedad íntegra. Mi acuerdo de confidencialidad me impide mostrar el código fuente o cualquier fragmento de él: los dos sitios que están públicamente en línea van enlazados y el resto se muestra en capturas. Escribí este código pero no reclamo su propiedad. Está aquí para mostrar trabajo real. Mi proyecto de fin de carrera, más abajo, sí es mío. Job Radar también, la última tarjeta de aquí: lo construí en mi propio tiempo, no es de Awesomeree, y su código fuente es público.',
       shotAlt: (title: string) => `Captura de ${title}`,
       shotAltLarge: (title: string) => `Captura ampliada de ${title}`,
       enlarge: 'Ampliar la captura',
@@ -486,6 +489,7 @@ const strings = {
       prev: 'Vista anterior',
       next: 'Vista siguiente',
       tapToEnlarge: 'pulsa para ampliar',
+      viewSource: 'Ver el código fuente',
     },
     fyp: {
       kicker: 'Proyecto de fin de carrera', title: 'Sistema de gestión multitienda',

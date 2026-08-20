@@ -263,17 +263,35 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               </span>
             ))}
           </div>
-          {p.link && (
-            <a
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => openExternal(e, p.link!)}
-              style={{ touchAction: 'manipulation' }}
-              className="mt-7 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
-            >
-              {p.linkLabel ?? 'Visit site'} <ArrowUpRight size={15} />
-            </a>
+          {(p.link || p.repo) && (
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              {p.link && (
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => openExternal(e, p.link!)}
+                  style={{ touchAction: 'manipulation' }}
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
+                >
+                  {p.linkLabel ?? 'Visit site'} <ArrowUpRight size={15} />
+                </a>
+              )}
+              {/* Secondary on purpose: the live site is what someone wants to see
+                  first, and the source is there for anyone who wants to check. */}
+              {p.repo && (
+                <a
+                  href={p.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => openExternal(e, p.repo!)}
+                  style={{ touchAction: 'manipulation' }}
+                  className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm font-semibold text-zinc-700 transition-colors hover:border-accent hover:text-accent dark:border-nline dark:text-zinc-300"
+                >
+                  {ui.projects.viewSource} <ArrowUpRight size={15} />
+                </a>
+              )}
+            </div>
           )}
         </div>
       </motion.div>

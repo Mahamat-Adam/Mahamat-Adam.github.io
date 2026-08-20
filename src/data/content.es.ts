@@ -277,5 +277,30 @@ export const es: Overlay = {
          artísticas completas para que el cliente pudiera elegir.`,
       ],
     },
+    'job-radar': {
+      category: 'En línea · mi propio proyecto',
+      blurb:
+        'Una herramienta de búsqueda de empleo que lee tu CV en tu propio navegador y ordena ofertas reales según lo bien que encajan contigo. Sin cuenta, sin subidas, sin servidor, y se actualiza sola cada mañana.',
+      detail: [
+        `La construí mientras yo mismo buscaba trabajo, porque las herramientas que
+         prometen arreglar la búsqueda de empleo entre países o quieren una suscripción o
+         suben tu CV al servidor de alguien sin decírtelo. Esta no tiene servidor
+         ninguno: el CV se lee con JavaScript en la propia página que ya tienes abierta,
+         así que no hay ningún sitio al que el archivo pueda ir.`,
+        `La clasificación pesa tus habilidades frente a lo que pide cada puesto, cuánto se
+         parecen tus cargos anteriores y cuán reciente es la oferta, y da más peso a las
+         habilidades raras que a las que enumera todo el mundo. Lee el nivel en el que
+         realmente estás y empuja hacia abajo los puestos muy por encima, que es justo lo
+         que la mayoría de portales hace mal. Las ofertas tomadas de las páginas de
+         empleo de cada empresa se comprueban a diario: si el puesto desaparece de su
+         web, desaparece de aquí.`,
+        `Todo se mantiene solo: una tarea programada recoge cada mañana de páginas de
+         empleo y de fuentes públicas, elimina duplicados, limita cuántas ofertas puede
+         aportar un mismo empleador y vuelve a desplegar. El filtro por país ocurre sobre
+         un globo WebGL interactivo, y el pipeline corre en Node sin base de datos: el
+         índice publicado es el único estado.`,
+      ],
+      linkLabel: 'Visitar el sitio',
+    },
   },
 }

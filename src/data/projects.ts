@@ -7,6 +7,8 @@ export type Project = {
   tech: string[]
   link?: string
   linkLabel?: string
+  /** Public source, shown beside the live link. Only my own projects have one. */
+  repo?: string
   image?: string
   /** extra views shown in the detail dialog with prev/next arrows */
   images?: string[]
@@ -175,6 +177,42 @@ export const projects: Project[] = [
       '/img/projects/helmet-2.jpg',
       '/img/projects/helmet-4.jpg',
     ],
-    accent: '#E63946',
+        accent: '#E63946',
+  },
+  {
+    /*
+     * Mine, not Awesomeree's — the only entry here that is, which is why the
+     * notice above the grid says so and why this is the one card carrying a
+     * source link.
+     */
+    id: 'job-radar',
+    title: 'Job Radar',
+    category: 'Live · my own project',
+    blurb:
+      'A job search tool that reads your CV in your own browser and ranks real openings against it. No account, no upload, no backend — and it refreshes itself every morning.',
+    detail: [
+      `I built this while job hunting myself, because the tools that promise to fix
+       cross-border job hunting either want a subscription or quietly upload your CV to
+       somebody's server. This one has no backend at all: the CV is parsed as JavaScript
+       on the page you already have open, so there is nowhere for the file to go.`,
+      `Ranking weighs the skills you have against what each role asks for, how closely
+       your past titles match, and how recently the role appeared — with rare skills
+       counting for more than the ones everybody lists. It reads what level you are at
+       and pushes roles far above it down, which is the part most job boards get wrong.
+       Listings from a company's own careers page are re-checked daily, so a role that
+       comes off their site disappears here too.`,
+      `The whole thing runs itself: a scheduled workflow collects from company career
+       pages and public feeds every morning, deduplicates across sources, caps how many
+       openings any single employer can contribute, and redeploys. Country filtering
+       runs on an interactive WebGL globe, and the pipeline that feeds it is Node with
+       no database — the published index is the only state.`,
+    ],
+    tech: ['React', 'TypeScript', 'Three.js', 'Tailwind CSS', 'Node.js', 'GitHub Actions'],
+    link: 'https://mahamat-adam.github.io/job-radar/',
+    linkLabel: 'Visit the site',
+    repo: 'https://github.com/Mahamat-Adam/job-radar',
+    image: '/img/projects/job-radar.jpg',
+    images: ['/img/projects/job-radar.jpg', '/img/projects/job-radar-2.jpg'],
+    accent: '#3B82F6',
   },
 ]

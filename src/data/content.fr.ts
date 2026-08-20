@@ -279,5 +279,29 @@ export const fr: Overlay = {
          directions artistiques complètes pour que le client puisse choisir.`,
       ],
     },
+    'job-radar': {
+      category: 'En ligne · mon propre projet',
+      blurb:
+        "Un outil de recherche d'emploi qui lit votre CV dans votre propre navigateur et classe de vraies offres selon ce qu'elles valent pour vous. Sans compte, sans téléversement, sans serveur, et remis à jour chaque matin.",
+      detail: [
+        `Je l'ai construit alors que je cherchais moi-même du travail, parce que les
+         outils qui promettent de simplifier la recherche à l'international veulent soit
+         un abonnement, soit envoyer discrètement votre CV sur le serveur de quelqu'un.
+         Celui-ci n'a aucun serveur : le CV est lu en JavaScript dans la page déjà
+         ouverte devant vous, il n'existe donc nulle part où le fichier pourrait aller.`,
+        `Le classement met en balance vos compétences et ce que chaque poste demande, la
+         proximité de vos intitulés précédents et la fraîcheur de l'annonce, en pesant
+         plus lourd les compétences rares que celles que tout le monde affiche. Il lit
+         votre niveau réel et repousse vers le bas les postes très au-dessus, ce que la
+         plupart des sites d'emploi ratent. Les annonces issues des pages carrières sont
+         revérifiées chaque jour : si le poste disparaît de leur site, il disparaît ici.`,
+        `L'ensemble fonctionne seul : une tâche planifiée collecte chaque matin sur les
+         pages carrières et les flux publics, déduplique, limite le nombre d'offres qu'un
+         même employeur peut fournir, puis redéploie. Le filtrage par pays se fait sur un
+         globe WebGL interactif, et le pipeline tourne sous Node sans base de données —
+         l'index publié est le seul état.`,
+      ],
+      linkLabel: 'Visiter le site',
+    },
   },
 }
