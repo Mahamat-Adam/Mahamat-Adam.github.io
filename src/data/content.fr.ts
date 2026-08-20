@@ -303,5 +303,45 @@ export const fr: Overlay = {
       ],
       linkLabel: 'Visiter le site',
     },
+    'scholarship-radar': {
+      category: 'En ligne · mon propre projet',
+      blurb:
+        'Bourses de licence et de master pour étudiants internationaux, où chaque lien mène à l\'université ou au gouvernement qui accorde réellement l\'argent. Aucun agrégateur, par construction et non par promesse.',
+      detail: [
+        `Chercher une bourse, c'est traverser des sites qui existent pour s'interposer entre
+         vous et l'université : ils republient une bourse avec un lien d'affiliation, font
+         parfois payer le privilège, et annoncent très souvent quelque chose dont la date
+         limite est passée depuis huit mois. Il n'y en a aucun ici, et il ne peut pas y en
+         avoir : une URL qui n'est pas sur le domaine d'un établissement enregistré est
+         refusée avant de pouvoir devenir une fiche. La règle résiste aussi aux
+         redirections, ce qui compte plus qu'il n'y paraît : deux universités de l'index
+         avaient laissé expirer leur domaine, racheté depuis par des revendeurs, et la
+         vérification les a arrêtées toutes les deux.`,
+        `Le collecteur parcourt un registre d'environ six mille universités dans
+         quarante-neuf pays. Il lit les sitemaps là où ils existent et sonde les
+         sous-domaines qu'occupent réellement les bureaux internationaux là où il n'y en a
+         pas — c'est ainsi qu'il atteint des universités chinoises qui ne publient rien sur
+         leur domaine principal. Il découpe ensuite une page de financement en bourses
+         individuelles, car la plupart en listent trente et non une, et lit pour chacune :
+         combien, jusqu'à quand, quel niveau, quel seuil de notes, et s'il faut seulement
+         une candidature séparée. Chaque affirmation conserve la phrase dont elle est tirée,
+         et la fiche la montre. Ce que la page ne dit pas, la fiche le déclare non précisé
+         plutôt que de le deviner.`,
+        `Seul ce qui est ouvert apparaît. Les dates limites sont revérifiées chaque jour et
+         ce qui ferme passe sur sa propre page avec le mois de réouverture, parce qu'une
+         bourse dont la date est passée n'est pas une bourse. L'outil vise le candidat
+         ordinaire plutôt que le lauréat de concours, et classe selon ce que vous pourriez
+         réellement obtenir : combien de bourses existent, et si le seuil annoncé est une
+         mention banale ou un paragraphe d'adjectifs sur les candidats exceptionnels.`,
+        `Sans backend ni base de données : une tâche planifiée collecte, vérifie l'index
+         contre ses propres règles, puis republie — et la tâche échoue plutôt que de
+         publier un mauvais lien. L'index n'est jamais versionné : chaque exécution
+         récupère la copie publiée depuis le site en ligne, si bien que le dépôt garde la
+         même taille quelle que soit la durée d'exploitation. L'interface se lit en anglais
+         ou en arabe, de droite à gauche, mais le nom d'une bourse et sa citation restent
+         dans la langue où l'établissement les a publiés.`,
+      ],
+      linkLabel: 'Visiter le site',
+    },
   },
 }

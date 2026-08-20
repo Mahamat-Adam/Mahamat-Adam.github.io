@@ -181,9 +181,9 @@ export const projects: Project[] = [
   },
   {
     /*
-     * Mine, not Awesomeree's — the only entry here that is, which is why the
-     * notice above the grid says so and why this is the one card carrying a
-     * source link.
+     * Mine, not Awesomeree's — this and the entry after it are the two that
+     * are, which is why the notice above the grid names them both and why
+     * these are the only cards carrying a source link.
      */
     id: 'job-radar',
     title: 'Job Radar',
@@ -214,5 +214,51 @@ export const projects: Project[] = [
     image: '/img/projects/job-radar.jpg',
     images: ['/img/projects/job-radar.jpg', '/img/projects/job-radar-2.jpg'],
     accent: '#3B82F6',
+  },
+  {
+    id: 'scholarship-radar',
+    title: 'Scholarship Radar',
+    category: 'Live · my own project',
+    blurb:
+      'Bachelor’s and master’s scholarships for international students, where every link goes to the university or government actually awarding the money. No aggregators, by construction rather than by promise.',
+    detail: [
+      `Searching for a scholarship means wading through sites that exist to sit between
+       you and a university: reposting an award with a referral link, sometimes charging
+       for the privilege, very often advertising something whose deadline passed eight
+       months ago. This has none of them in it, and structurally cannot: a URL that is
+       not on a registered institution’s own domain is refused by the collector before
+       it can become a listing. That rule survives redirects too, which matters more
+       than it sounds — two universities in the index had let their domains lapse to
+       domain traders, and the check caught both.`,
+      `The collector crawls a registry of roughly six thousand universities across
+       forty-nine countries. It reads sitemaps where they exist and probes the
+       subdomains international offices actually live on where they do not, which is
+       how it reaches Chinese universities that publish nothing at their apex domain.
+       It then splits a funding page into individual awards — most are a list of thirty,
+       not one — and reads the facts off each: how much, by when, which level, what
+       grade bar, whether there is a separate application at all. Every claim keeps the
+       sentence it was read from, and the card shows it. If a page does not say
+       something, the card says "not stated" rather than guessing.`,
+      `Only what is open right now appears. Deadlines are re-checked daily and anything
+       closed moves to its own page with the month it reopens, because a scholarship
+       whose deadline has gone is not a scholarship. It aims at ordinary applicants
+       rather than prize-winners, ranking by whether you could realistically get it —
+       how many awards exist, whether the bar is a plain 2:1 or a paragraph of
+       adjectives about exceptional candidates.`,
+      `No backend and no database: a scheduled workflow crawls, verifies the index
+       against its own rules, and republishes, and the run fails rather than publishing
+       a bad link. The index is never committed — each run pulls the live copy back
+       from the published site, so the repository stays the same size however long the
+       crawler runs. The interface reads in English or Arabic, right to left, though an
+       award’s name and its quoted evidence stay in whatever language the institution
+       published them in.`,
+    ],
+    tech: ['React', 'TypeScript', 'Three.js', 'Tailwind CSS', 'Node.js', 'GitHub Actions'],
+    link: 'https://mahamat-adam.github.io/scholarship-radar/',
+    linkLabel: 'Visit the site',
+    repo: 'https://github.com/Mahamat-Adam/scholarship-radar',
+    image: '/img/projects/scholarship-radar.jpg',
+    images: ['/img/projects/scholarship-radar.jpg', '/img/projects/scholarship-radar-2.jpg'],
+    accent: '#0F766E',
   },
 ]

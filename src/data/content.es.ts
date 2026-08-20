@@ -302,5 +302,43 @@ export const es: Overlay = {
       ],
       linkLabel: 'Visitar el sitio',
     },
+    'scholarship-radar': {
+      category: 'En línea · mi propio proyecto',
+      blurb:
+        'Becas de grado y máster para estudiantes internacionales, donde cada enlace lleva a la universidad o al gobierno que realmente concede el dinero. Sin agregadores, por construcción y no por promesa.',
+      detail: [
+        `Buscar una beca significa atravesar sitios que existen para interponerse entre tú y
+         la universidad: republican una beca con un enlace de referido, a veces cobran por
+         el privilegio y muy a menudo anuncian algo cuyo plazo venció hace ocho meses. Aquí
+         no hay ninguno, y no puede haberlo: una URL que no esté en el dominio propio de una
+         institución registrada se rechaza antes de poder convertirse en una ficha. La regla
+         resiste también a las redirecciones, lo que importa más de lo que parece: dos
+         universidades del índice habían dejado caducar su dominio, comprado después por
+         revendedores, y la comprobación detuvo ambas.`,
+        `El recolector recorre un registro de unas seis mil universidades en cuarenta y nueve
+         países. Lee los sitemaps donde existen y sondea los subdominios donde viven
+         realmente las oficinas internacionales donde no los hay, que es como alcanza
+         universidades chinas que no publican nada en su dominio principal. Después divide
+         una página de financiación en becas individuales, porque la mayoría lista treinta y
+         no una, y lee de cada una: cuánto, hasta cuándo, qué nivel, qué nota mínima y si
+         siquiera hace falta una solicitud aparte. Cada afirmación conserva la frase de la
+         que se leyó, y la ficha la muestra. Lo que la página no dice, la ficha lo declara
+         no indicado en lugar de adivinarlo.`,
+        `Solo aparece lo que está abierto ahora. Los plazos se revisan a diario y lo que
+         cierra pasa a su propia página con el mes en que se espera que reabra, porque una
+         beca cuyo plazo pasó no es una beca. Apunta al solicitante corriente y no al
+         premiado, ordenando por lo que realmente podrías conseguir: cuántas becas existen y
+         si el listón publicado es una nota normal o un párrafo de adjetivos sobre
+         candidatos excepcionales.`,
+        `Sin backend ni base de datos: una tarea programada recolecta, verifica el índice
+         contra sus propias reglas y vuelve a publicar, y la tarea falla antes que publicar
+         un enlace equivocado. El índice nunca se versiona: cada ejecución recupera la copia
+         publicada desde el sitio en vivo, así que el repositorio mantiene su tamaño por
+         mucho que corra el rastreador. La interfaz se lee en inglés o en árabe, de derecha a
+         izquierda, aunque el nombre de una beca y su cita permanecen en el idioma en que la
+         institución las publicó.`,
+      ],
+      linkLabel: 'Visitar el sitio',
+    },
   },
 }
