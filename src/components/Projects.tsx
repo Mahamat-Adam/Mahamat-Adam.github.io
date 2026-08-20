@@ -263,8 +263,19 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
               </span>
             ))}
           </div>
+          {/* Two buttons do not fit side by side on a phone at full padding —
+              English misses by five pixels, Spanish by forty — so on narrow
+              screens they share the row as halves rather than one dropping
+              beneath the other and leaving a gap next to it. A card with only
+              one link keeps its natural width. */}
           {(p.link || p.repo) && (
-            <div className="mt-7 flex flex-wrap items-center gap-3">
+            <div
+              className={
+                p.link && p.repo
+                  ? 'mt-7 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-3'
+                  : 'mt-7 flex flex-wrap items-center gap-3'
+              }
+            >
               {p.link && (
                 <a
                   href={p.link}
@@ -272,7 +283,7 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
                   rel="noopener noreferrer"
                   onClick={(e) => openExternal(e, p.link!)}
                   style={{ touchAction: 'manipulation' }}
-                  className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-accent px-4 py-3 text-[13px] font-semibold text-white transition-transform hover:scale-[1.03] sm:px-6 sm:text-sm"
                 >
                   {p.linkLabel ?? 'Visit site'} <ArrowUpRight size={15} />
                 </a>
@@ -286,7 +297,7 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
                   rel="noopener noreferrer"
                   onClick={(e) => openExternal(e, p.repo!)}
                   style={{ touchAction: 'manipulation' }}
-                  className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm font-semibold text-zinc-700 transition-colors hover:border-accent hover:text-accent dark:border-nline dark:text-zinc-300"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-line px-4 py-3 text-[13px] font-semibold text-zinc-700 transition-colors hover:border-accent hover:text-accent dark:border-nline dark:text-zinc-300 sm:px-6 sm:text-sm"
                 >
                   {ui.projects.viewSource} <ArrowUpRight size={15} />
                 </a>
