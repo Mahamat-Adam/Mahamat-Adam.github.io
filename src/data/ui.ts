@@ -208,7 +208,7 @@ const strings = {
       prev: 'العرض السابق',
       next: 'العرض التالي',
       tapToEnlarge: 'اضغط للتكبير',
-      viewSource: 'تصفح الكود المصدري',
+      viewSource: 'تصفح الكود',
       shotAlt: (title: string) => `صورة من ${title}`,
       shotAltLarge: (title: string) => `صورة مكبرة من ${title}`,
     },
