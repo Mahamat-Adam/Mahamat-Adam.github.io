@@ -309,9 +309,12 @@ export const es: Overlay = {
       detail: [
         `Buscar una beca significa atravesar sitios que existen para interponerse entre tú y
          la universidad: republican una beca con un enlace de referido, a veces cobran por
-         el privilegio y muy a menudo anuncian algo cuyo plazo venció hace ocho meses. Aquí
-         no hay ninguno, y no puede haberlo: una URL que no esté en el dominio propio de una
-         institución registrada se rechaza antes de poder convertirse en una ficha. La regla
+         el privilegio y muy a menudo anuncian algo cuyo plazo venció hace ocho meses.
+         Ninguno de esos sitios puede entrar aquí, y estructuralmente no puede: una URL que
+         no esté en el dominio propio de una institución registrada se rechaza antes de
+         poder convertirse en una ficha. Cada plazo publicado se revisa a diario y lo
+         vencido desaparece — y cuando una página no publica ninguno, que es lo habitual,
+         la ficha lo dice en vez de aparentar que sigue abierta. La regla
          resiste también a las redirecciones, lo que importa más de lo que parece: dos
          universidades del índice habían dejado caducar su dominio, comprado después por
          revendedores, y la comprobación detuvo ambas.`,

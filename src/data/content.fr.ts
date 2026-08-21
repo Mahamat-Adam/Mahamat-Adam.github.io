@@ -311,9 +311,12 @@ export const fr: Overlay = {
         `Chercher une bourse, c'est traverser des sites qui existent pour s'interposer entre
          vous et l'université : ils republient une bourse avec un lien d'affiliation, font
          parfois payer le privilège, et annoncent très souvent quelque chose dont la date
-         limite est passée depuis huit mois. Il n'y en a aucun ici, et il ne peut pas y en
-         avoir : une URL qui n'est pas sur le domaine d'un établissement enregistré est
-         refusée avant de pouvoir devenir une fiche. La règle résiste aussi aux
+         limite est passée depuis huit mois. Aucun de ces sites ne peut entrer ici, et ne
+         le peut structurellement pas : une URL qui n'est pas sur le domaine d'un
+         établissement enregistré est refusée avant de pouvoir devenir une fiche. Chaque
+         date limite publiée est revérifiée quotidiennement et ce qui est dépassé
+         disparaît — et quand une page n'en publie aucune, ce qui est le cas de la
+         plupart, la fiche le dit au lieu de la faire passer pour ouverte. La règle résiste aussi aux
          redirections, ce qui compte plus qu'il n'y paraît : deux universités de l'index
          avaient laissé expirer leur domaine, racheté depuis par des revendeurs, et la
          vérification les a arrêtées toutes les deux.`,
